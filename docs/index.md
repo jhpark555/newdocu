@@ -26,7 +26,7 @@ In most cases they are used as thread safe first-in-first-out (FIFO) buffers.
 1.2. Heap service
 -------------------------------
 heap_4.c is used as the heap service on the SDK. More details can be found in the header
- file \gva\kernel\rtos\FreeRTOS\Source\include\portable.h.
+ file Source\portable
 
 
  2. TCP/IP: lwIP
