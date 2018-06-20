@@ -1,0 +1,17 @@
+site_name: OpenRISC MiddleWare Libraries
+site_description: 'The manual of the OpenRISC libraries'
+site_author: 'Philip Park'
+
+# Repository
+edit_uri: ""
+repo_url: https://github.com/
+
+pages:
+ - Home: 'index.md' 
+ 
+theme:
+ name: 'material'
+# name: 'readthedocs'
+# Copyright
+copyright: 'Copyright & copy; 2018 ESS Technology Inc.'
+google_analytics: ['UA-27795084-5', 'mkdocs.org']
