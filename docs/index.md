@@ -25,11 +25,10 @@ In most cases they are used as thread safe first-in-first-out (FIFO) buffers.
 
 1.2. Heap service
 -------------------------------
-heap_4.c is used as the heap service on the SDK. More details can be found in the header
- file Source\portable
+heap_4.c is used as the heap service on the SDK. More details can be found in the header file Source\portable
 
 
- 2. TCP/IP: lwIP
+2. TCP/IP: lwIP
 -------------------------------------
 TCP/IP (Transmission Control Protocol/Internet Protocol) is a communication internet protocol 
 and can also be used in a private network, either an intranet or an extranet. It provides 
