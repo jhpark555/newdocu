@@ -1,3 +1,10 @@
+
+Introduction
+===================================
+>As we see below, there are 10 kinds of libraries and FreeRTOS kernel
+and Hal drivers.  
+
+
 0. Stack 
 ------------------------------------------
 ![blockdiagram](/image/Doc2-1.jpg) 
