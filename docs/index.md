@@ -1,13 +1,113 @@
 
 Introduction
 ===================================
->As we see below, there are 10 kinds of libraries and FreeRTOS kernel
-and Hal drivers.  
+>OpenRISC is a CPU architecture developed by the OpenCores community. OR1200 is an open-source Verilog implementation of the CPU core, and ORPSoC (OpenRISC Reference Platform System on Chip) combines the OR1200 CPU with a set of peripherals.
+
+
+##Toolchain on the Linux
+##Dependencies
+	sudo apt-get install libmpc-dev libgmp3-dev libmpfr-dev lzop libsdl1.2-dev xterm automake libtool
+
+##OpenRISC GNU tool chain precompiled for 32-bit Linux
+
+[or1k-elf- toolchain built in April 2013 from github sources (150MB)](https://www.dropbox.com/s/hm3xl2ex9sn55jr/or1k-toolchain.tar.bz2)
+
+Extract this under /opt to create the directory or1k-toolchain.
+
+Then run the following to add the executables to your $PATH:
+
+	echo "# OpenRISC tool chain path" >> ~/.bashrc
+
+	echo "export PATH=$PATH:/opt/or1k-toolchain/bin" >> ~/.bashrc
 
 
 0. Stack 
 ------------------------------------------
 ![blockdiagram](/image/Doc2-1.jpg) 
+
+
+0.1 Stack structure
+
+	├───alexa
+	│   └───include
+	├───arch
+	├───asio
+	│   └───include
+	├───audio_player
+	│   └───include
+	├───bear_ssl
+	│   ├───inc
+	│   ├───src
+	│   └───tools
+	├───cjson
+	│   └───inc
+	├───common
+	│   └───include
+	├───dlna
+	│   └───include
+	├───drivers
+	├───fifo
+	│   └───include
+	├───http
+	│   └───include
+	├───httpclient
+	│   ├───inc
+	│   └───src
+	├───lwip
+	│   ├───contrib
+	│   │   └───port
+	│   │       └───FreeRTOS
+	│   │           └───OpenRISC
+	│   │               └───arch
+	│   ├───doc
+	│   └───src
+	│       ├───api
+	│       ├───core
+	│       │   ├───ipv4
+	│       │   ├───ipv6
+	│       │   └───snmp
+	│       ├───include
+	│       │   ├───ipv4
+	│       │   │   └───lwip
+	│       │   ├───ipv6
+	│       │   │   └───lwip
+	│       │   ├───lwip
+	│       │   └───netif
+	│       └───netif
+	│           └───ppp
+	├───mbedtls
+	│   ├───include
+	│   │   └───mbedtls
+	│   ├───library
+	│   └───port
+	├───mqtt
+	│   ├───MQTTClient-C
+	│   │   ├───samples
+	│   │   │   └───linux
+	│   │   └───src
+	│   │       
+	│   └───MQTTPacket
+	│       ├───samples
+	│       ├───src
+	│       └───test
+	├───multipart_parser
+	│   └───include
+	├───nghttp2
+	│   ├───lib
+	│   │   └───includes
+	│   │       └───nghttp2
+	│   └───port
+	│       └───include
+	├───nghttp_client
+	│   └───include
+	├───sntp
+	│   └───inc
+	├───Source
+	│   ├───include
+	│   └───portable
+	└───url_parser
+	    └───include
+ 
 
 1. RTOS: FreeRTOS
 -------------------------
@@ -176,3 +276,24 @@ for the required ROM/RAM and heap size.
 |---|------------|---------------------------|--------|
 |nghttp2| 60545| 1748|80kB|
 
+
+
+
+
+
+
+
+
+A. Video Demo over FPGA O-board
+
+-1. MQTT TLS on the FreeRTOS
+
+<div class="video-wrapper">
+  <iframe width="300" height="220" src="https://www.youtube.com/embed/ou_Cd5UAY_o" frameborder="0" allowfullscreen></iframe>
+</div>
+
+-2. MQTT remote controller from the Cloud
+
+<div class="video-wrapper">
+  <iframe width="300" height="220" src="https://www.youtube.com/embed/XV6whQc8ttQ" frameborder="0" allowfullscreen></iframe>
+</div>

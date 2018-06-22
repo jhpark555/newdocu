@@ -3,15 +3,18 @@ site_description: 'The manual of the OpenRISC libraries'
 site_author: 'Philip Park'
 
 # Repository
-edit_uri: ""
-repo_url: https://github.com/
+site_url: https://jhpark555.github.io/newdocu
+repo_url: https://github.com/jhpark555/newdocu
 
 pages:
- - Home: 'index.md' 
+ - 'Introduction': 'index.md' 
  
 theme:
- name: 'material'
+ name: amelia
+# name: journal
+# name: readable
+# name: 'material'
 # name: 'readthedocs'
 # Copyright
-copyright: 'Copyright & copy; 2018 ESS Technology Inc.'
-google_analytics: ['UA-27795084-5', 'mkdocs.org']
+copyright: 'Copyright & copy; 2018 Philip Park'
+google_analytics: ['UA-36723568-3', 'mkdocs.org']
