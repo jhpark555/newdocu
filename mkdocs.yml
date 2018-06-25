@@ -8,6 +8,7 @@ repo_url: https://github.com/jhpark555/newdocu
 
 pages:
  - 'Introduction': 'index.md' 
+# - API : 'docs/html/index.html'
  
 theme:
  name: amelia

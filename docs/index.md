@@ -162,7 +162,7 @@ It includes the IP, ICMP, TCP, UDP, IGMP, ARP, AutoIP, DHCP, DNS and SNMP protoc
 The MEM_SIZE parameter defines the size of the heap memory, PBUF_RAM, stores the sent and 
 received data. If the application requires more data to send, the value of the parameter must be set higher.
 The values of different control blocks are configurable in lwIP. For example, MEMP_NUM_NETDB
-sets the concurrent Domain Name Resolution connections. Table 4 lists the current configuration 
+sets the concurrent Domain Name Resolution connections. Below table lists the current configuration 
 values of these blocks in the SDK. These pools are configured and allocated from a buffer reserved 
 only for the lwIP. The values are set to pass internal performance test and are expected to
 fulfill most common use cases. However, the number of configured control blocks could limit the maximum concurrent connections created by the network applications in the system, developers can configure these values for a specific use case.
@@ -237,7 +237,7 @@ HTTPClient implements the client-side of HTTP/1.1. It provides base interfaces t
 
 4.2. Memory usage
 ---------------------
-The static footprint statistics for HTTP client are shown in Table 7, please note that the RAM size is 0 but it allocates the required buffer from system heap during the application execution.
+The static footprint statistics for HTTP client are shown in Table, please note that the RAM size is 0 but it allocates the required buffer from system heap during the application execution.
 
 | |ROM(Kb)|RAM, static analysis (Kb)|
 |-------------|-----|----------|
@@ -269,7 +269,7 @@ It only enables below features:
 5.2. Memory usage
 --------------------------
 HTTP/2 is a new protocol and therefore it requires more 
-resources in terms of code and heap size. See Table 14 
+resources in terms of code and heap size. See Table 
 for the required ROM/RAM and heap size.
 
 |   |ROM (bytes) | RAM,static analysis(bytes)|Heap size |
@@ -278,14 +278,8 @@ for the required ROM/RAM and heap size.
 
 
 
-
-
-
-
-
-
 A. Video Demo over FPGA O-board
-
+------------------------------------
 -1. MQTT TLS on the FreeRTOS
 
 <div class="video-wrapper">
