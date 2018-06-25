@@ -90,6 +90,7 @@
             <li><a href="#5-http2-client-nghttp2">5. HTTP/2 client: nghttp2</a></li>
             <li><a href="#51-features">5.1. Features</a></li>
             <li><a href="#52-memory-usage">5.2. Memory usage</a></li>
+            <li><a href="#a-video-demo-over-fpga-o-board">A. Video Demo over FPGA O-board</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -367,7 +368,7 @@ from an ARM Cortex M4 targeted configuration using the gcc -Os optimization.
 <h2 id="41-features">4.1. Features</h2>
 <p>HTTPClient implements the client-side of HTTP/1.1. It provides base interfaces to send HTTP requests and receive HTTP responses from a resource identified by a URI. It also supports HTTPS (HTTP over SSL/TLS) to provide secure communication.</p>
 <h2 id="42-memory-usage">4.2. Memory usage</h2>
-<p>The static footprint statistics for HTTP client are shown in Table 7, please note that the RAM size is 0 but it allocates the required buffer from system heap during the application execution.</p>
+<p>The static footprint statistics for HTTP client are shown in Table, please note that the RAM size is 0 but it allocates the required buffer from system heap during the application execution.</p>
 <table>
 <thead>
 <tr>
@@ -404,7 +405,7 @@ from an ARM Cortex M4 targeted configuration using the gcc -Os optimization.
 </ul>
 <h2 id="52-memory-usage">5.2. Memory usage</h2>
 <p>HTTP/2 is a new protocol and therefore it requires more 
-resources in terms of code and heap size. See Table 14 
+resources in terms of code and heap size. See Table 
 for the required ROM/RAM and heap size.</p>
 <table>
 <thead>
@@ -424,7 +425,7 @@ for the required ROM/RAM and heap size.</p>
 </tr>
 </tbody>
 </table>
-<p>A. Video Demo over FPGA O-board</p>
+<h2 id="a-video-demo-over-fpga-o-board">A. Video Demo over FPGA O-board</h2>
 <p>-1. MQTT TLS on the FreeRTOS</p>
 <div class="video-wrapper">
   <iframe width="300" height="220" src="https://www.youtube.com/embed/ou_Cd5UAY_o" frameborder="0" allowfullscreen></iframe>
@@ -516,5 +517,5 @@ for the required ROM/RAM and heap size.</p>
 
 <!--
 MkDocs version : 0.17.3
-Build Date UTC : 2018-06-25 16:41:01
+Build Date UTC : 2018-06-25 16:44:14
 -->
