@@ -1,0 +1,3810 @@
+diff -u Source/croutine.c O-Source/croutine.c
+--- Source/croutine.c	2015-01-16 12:43:22.000000000 -0800
++++ O-Source/croutine.c	2018-05-10 09:37:50.000000000 -0700
+@@ -1,5 +1,5 @@
+ /*
+-    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
++    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
+     All rights reserved
+ 
+     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+@@ -10,55 +10,55 @@
+     the terms of the GNU General Public License (version 2) as published by the
+     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+ 
+-	***************************************************************************
+-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
+-    >>!   obliged to provide the source code for proprietary components     !<<
+-    >>!   outside of the FreeRTOS kernel.                                   !<<
+-	***************************************************************************
++	***************************************************************************
++    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
++    >>!   distribute a combined work that includes FreeRTOS without being   !<<
++    >>!   obliged to provide the source code for proprietary components     !<<
++    >>!   outside of the FreeRTOS kernel.                                   !<<
++	***************************************************************************
+ 
+     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
++    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+     link: http://www.freertos.org/a00114.html
+ 
+     ***************************************************************************
+      *                                                                       *
+-     *    FreeRTOS provides completely free yet professionally developed,    *
+-     *    robust, strictly quality controlled, supported, and cross          *
+-     *    platform software that is more than just the market leader, it     *
+-     *    is the industry's de facto standard.                               *
++     *    FreeRTOS provides completely free yet professionally developed,    *
++     *    robust, strictly quality controlled, supported, and cross          *
++     *    platform software that is more than just the market leader, it     *
++     *    is the industry's de facto standard.                               *
+      *                                                                       *
+-     *    Help yourself get started quickly while simultaneously helping     *
+-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+-     *    tutorial book, reference manual, or both:                          *
+-     *    http://www.FreeRTOS.org/Documentation                              *
++     *    Help yourself get started quickly while simultaneously helping     *
++     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
++     *    tutorial book, reference manual, or both:                          *
++     *    http://www.FreeRTOS.org/Documentation                              *
+      *                                                                       *
+     ***************************************************************************
+ 
+-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+-	the FAQ page "My application does not run, what could be wrong?".  Have you
+-	defined configASSERT()?
+-
+-	http://www.FreeRTOS.org/support - In return for receiving this top quality
+-	embedded software for free we request you assist our global community by
+-	participating in the support forum.
+-
+-	http://www.FreeRTOS.org/training - Investing in training allows your team to
+-	be as productive as possible as early as possible.  Now you can receive
+-	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+-	Ltd, and the world's leading authority on the world's leading RTOS.
++    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
++	the FAQ page "My application does not run, what could be wrong?".  Have you
++	defined configASSERT()?
++
++	http://www.FreeRTOS.org/support - In return for receiving this top quality
++	embedded software for free we request you assist our global community by
++	participating in the support forum.
++
++	http://www.FreeRTOS.org/training - Investing in training allows your team to
++	be as productive as possible as early as possible.  Now you can receive
++	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
++	Ltd, and the world's leading authority on the world's leading RTOS.
+ 
+     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+ 
+-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+-
+-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+-    licenses offer ticketed support, indemnification and commercial middleware.
++    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
++    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
++
++    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
++    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
++    licenses offer ticketed support, indemnification and commercial middleware.
+ 
+     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+     engineered and independently SIL3 certified version for use in safety and
+@@ -296,7 +296,7 @@
+ 				have been moved to the pending ready list and the following
+ 				line is still valid.  Also the pvContainer parameter will have
+ 				been set to NULL so the following lines are also valid. */
+-				( void ) uxListRemove( &( pxCRCB->xGenericListItem ) );
++				( void ) uxListRemove( &( pxCRCB->xGenericListItem ) );
+ 
+ 				/* Is the co-routine waiting on an event also? */
+ 				if( pxCRCB->xEventListItem.pvContainer )
+diff -u Source/event_groups.c O-Source/event_groups.c
+--- Source/event_groups.c	2015-01-16 12:43:22.000000000 -0800
++++ O-Source/event_groups.c	2018-05-10 09:39:24.000000000 -0700
+@@ -1,64 +1,64 @@
+ /*
+-    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
++    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
+     All rights reserved
+ 
+     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+-
++
+     This file is part of the FreeRTOS distribution.
+ 
+     FreeRTOS is free software; you can redistribute it and/or modify it under
+     the terms of the GNU General Public License (version 2) as published by the
+     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+ 
+-	***************************************************************************
+-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
+-    >>!   obliged to provide the source code for proprietary components     !<<
+-    >>!   outside of the FreeRTOS kernel.                                   !<<
+-	***************************************************************************
++	***************************************************************************
++    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
++    >>!   distribute a combined work that includes FreeRTOS without being   !<<
++    >>!   obliged to provide the source code for proprietary components     !<<
++    >>!   outside of the FreeRTOS kernel.                                   !<<
++	***************************************************************************
+ 
+     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
++    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+     link: http://www.freertos.org/a00114.html
+ 
+     ***************************************************************************
+      *                                                                       *
+-     *    FreeRTOS provides completely free yet professionally developed,    *
+-     *    robust, strictly quality controlled, supported, and cross          *
+-     *    platform software that is more than just the market leader, it     *
+-     *    is the industry's de facto standard.                               *
++     *    FreeRTOS provides completely free yet professionally developed,    *
++     *    robust, strictly quality controlled, supported, and cross          *
++     *    platform software that is more than just the market leader, it     *
++     *    is the industry's de facto standard.                               *
+      *                                                                       *
+-     *    Help yourself get started quickly while simultaneously helping     *
+-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+-     *    tutorial book, reference manual, or both:                          *
+-     *    http://www.FreeRTOS.org/Documentation                              *
++     *    Help yourself get started quickly while simultaneously helping     *
++     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
++     *    tutorial book, reference manual, or both:                          *
++     *    http://www.FreeRTOS.org/Documentation                              *
+      *                                                                       *
+     ***************************************************************************
+ 
+-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+-	the FAQ page "My application does not run, what could be wrong?".  Have you
+-	defined configASSERT()?
+-
+-	http://www.FreeRTOS.org/support - In return for receiving this top quality
+-	embedded software for free we request you assist our global community by
+-	participating in the support forum.
+-
+-	http://www.FreeRTOS.org/training - Investing in training allows your team to
+-	be as productive as possible as early as possible.  Now you can receive
+-	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+-	Ltd, and the world's leading authority on the world's leading RTOS.
++    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
++	the FAQ page "My application does not run, what could be wrong?".  Have you
++	defined configASSERT()?
++
++	http://www.FreeRTOS.org/support - In return for receiving this top quality
++	embedded software for free we request you assist our global community by
++	participating in the support forum.
++
++	http://www.FreeRTOS.org/training - Investing in training allows your team to
++	be as productive as possible as early as possible.  Now you can receive
++	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
++	Ltd, and the world's leading authority on the world's leading RTOS.
+ 
+     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+ 
+-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+-
+-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+-    licenses offer ticketed support, indemnification and commercial middleware.
++    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
++    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
++
++    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
++    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
++    licenses offer ticketed support, indemnification and commercial middleware.
+ 
+     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+     engineered and independently SIL3 certified version for use in safety and
+@@ -183,7 +183,7 @@
+ 
+ 			/* Rendezvous always clear the bits.  They will have been cleared
+ 			already unless this is the only task in the rendezvous. */
+-			pxEventBits->uxEventBits &= ~uxBitsToWaitFor;
++			pxEventBits->uxEventBits &= ~uxBitsToWaitFor;
+ 
+ 			xTicksToWait = 0;
+ 		}
+@@ -241,7 +241,7 @@
+ 				/* Although the task got here because it timed out before the
+ 				bits it was waiting for were set, it is possible that since it
+ 				unblocked another task has set the bits.  If this is the case
+-				then it needs to clear the bits before exiting. */
++				then it needs to clear the bits before exiting. */
+ 				if( ( uxReturn & uxBitsToWaitFor ) == uxBitsToWaitFor )
+ 				{
+ 					pxEventBits->uxEventBits &= ~uxBitsToWaitFor;
+@@ -257,16 +257,16 @@
+ 		}
+ 		else
+ 		{
+-			/* The task unblocked because the bits were set. */
++			/* The task unblocked because the bits were set. */
+ 		}
+-
+-		/* Control bits might be set as the task had blocked should not be
+-		returned. */
+-		uxReturn &= ~eventEVENT_BITS_CONTROL_BYTES;
++
++		/* Control bits might be set as the task had blocked should not be
++		returned. */
++		uxReturn &= ~eventEVENT_BITS_CONTROL_BYTES;
+ 	}
+ 
+ 	traceEVENT_GROUP_SYNC_END( xEventGroup, uxBitsToSet, uxBitsToWaitFor, xTimeoutOccurred );
+-
++
+ 	return uxReturn;
+ }
+ /*-----------------------------------------------------------*/
+@@ -280,7 +280,7 @@
+ 
+ 	/* Check the user is not attempting to wait on the bits used by the kernel
+ 	itself, and that at least one bit is being requested. */
+-	configASSERT( xEventGroup );
++	configASSERT( xEventGroup );
+ 	configASSERT( ( uxBitsToWaitFor & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 	configASSERT( uxBitsToWaitFor != 0 );
+ 	#if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+@@ -402,19 +402,19 @@
+ 			}
+ 			taskEXIT_CRITICAL();
+ 
+-			/* Prevent compiler warnings when trace macros are not used. */
++			/* Prevent compiler warnings when trace macros are not used. */
+ 			xTimeoutOccurred = pdFALSE;
+ 		}
+ 		else
+ 		{
+-			/* The task unblocked because the bits were set. */
++			/* The task unblocked because the bits were set. */
+ 		}
+-
+-		/* The task blocked so control bits may have been set. */
+-		uxReturn &= ~eventEVENT_BITS_CONTROL_BYTES;
++
++		/* The task blocked so control bits may have been set. */
++		uxReturn &= ~eventEVENT_BITS_CONTROL_BYTES;
+ 	}
+ 	traceEVENT_GROUP_WAIT_BITS_END( xEventGroup, uxBitsToWaitFor, xTimeoutOccurred );
+-
++
+ 	return uxReturn;
+ }
+ /*-----------------------------------------------------------*/
+@@ -426,7 +426,7 @@
+ 
+ 	/* Check the user is not attempting to clear the bits used by the kernel
+ 	itself. */
+-	configASSERT( xEventGroup );
++	configASSERT( xEventGroup );
+ 	configASSERT( ( uxBitsToClear & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 
+ 	taskENTER_CRITICAL();
+@@ -446,22 +446,22 @@
+ }
+ /*-----------------------------------------------------------*/
+ 
+-#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) )
+-
+-	BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear )
+-	{
+-		BaseType_t xReturn;
+-
+-		traceEVENT_GROUP_CLEAR_BITS_FROM_ISR( xEventGroup, uxBitsToClear );
+-		xReturn = xTimerPendFunctionCallFromISR( vEventGroupClearBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToClear, NULL );
+-
+-		return xReturn;
+-	}
+-
+-#endif
+-/*-----------------------------------------------------------*/
+-
+-EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup )
++#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) )
++
++	BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear )
++	{
++		BaseType_t xReturn;
++
++		traceEVENT_GROUP_CLEAR_BITS_FROM_ISR( xEventGroup, uxBitsToClear );
++		xReturn = xTimerPendFunctionCallFromISR( vEventGroupClearBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToClear, NULL );
++
++		return xReturn;
++	}
++
++#endif
++/*-----------------------------------------------------------*/
++
++EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup )
+ {
+ UBaseType_t uxSavedInterruptStatus;
+ EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+@@ -488,7 +488,7 @@
+ 
+ 	/* Check the user is not attempting to set the bits used by the kernel
+ 	itself. */
+-	configASSERT( xEventGroup );
++	configASSERT( xEventGroup );
+ 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+ 
+ 	pxList = &( pxEventBits->xTasksWaitingForBits );
+@@ -602,14 +602,14 @@
+ }
+ /*-----------------------------------------------------------*/
+ 
+-/* For internal use only - execute a 'clear bits' command that was pended from
+-an interrupt. */
+-void vEventGroupClearBitsCallback( void *pvEventGroup, const uint32_t ulBitsToClear )
+-{
+-	( void ) xEventGroupClearBits( pvEventGroup, ( EventBits_t ) ulBitsToClear );
+-}
+-/*-----------------------------------------------------------*/
+-
++/* For internal use only - execute a 'clear bits' command that was pended from
++an interrupt. */
++void vEventGroupClearBitsCallback( void *pvEventGroup, const uint32_t ulBitsToClear )
++{
++	( void ) xEventGroupClearBits( pvEventGroup, ( EventBits_t ) ulBitsToClear );
++}
++/*-----------------------------------------------------------*/
++
+ static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, const EventBits_t uxBitsToWaitFor, const BaseType_t xWaitForAllBits )
+ {
+ BaseType_t xWaitConditionMet = pdFALSE;
+@@ -646,7 +646,7 @@
+ /*-----------------------------------------------------------*/
+ 
+ #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( INCLUDE_xTimerPendFunctionCall == 1 ) && ( configUSE_TIMERS == 1 ) )
+-
++
+ 	BaseType_t xEventGroupSetBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, BaseType_t *pxHigherPriorityTaskWoken )
+ 	{
+ 	BaseType_t xReturn;
+@@ -656,12 +656,12 @@
+ 
+ 		return xReturn;
+ 	}
+-
++
+ #endif
+ /*-----------------------------------------------------------*/
+ 
+ #if (configUSE_TRACE_FACILITY == 1)
+-
++
+ 	UBaseType_t uxEventGroupGetNumber( void* xEventGroup )
+ 	{
+ 	UBaseType_t xReturn;
+@@ -678,6 +678,6 @@
+ 
+ 		return xReturn;
+ 	}
+-
++
+ #endif
+ 
+Common subdirectories: Source/include and O-Source/include
+diff -u Source/list.c O-Source/list.c
+--- Source/list.c	2015-01-16 12:43:28.000000000 -0800
++++ O-Source/list.c	2018-05-10 09:40:20.000000000 -0700
+@@ -1,5 +1,5 @@
+ /*
+-    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
++    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
+     All rights reserved
+ 
+     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+@@ -10,55 +10,55 @@
+     the terms of the GNU General Public License (version 2) as published by the
+     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+ 
+-	***************************************************************************
+-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
+-    >>!   obliged to provide the source code for proprietary components     !<<
+-    >>!   outside of the FreeRTOS kernel.                                   !<<
+-	***************************************************************************
++	***************************************************************************
++    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
++    >>!   distribute a combined work that includes FreeRTOS without being   !<<
++    >>!   obliged to provide the source code for proprietary components     !<<
++    >>!   outside of the FreeRTOS kernel.                                   !<<
++	***************************************************************************
+ 
+     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
++    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+     link: http://www.freertos.org/a00114.html
+ 
+     ***************************************************************************
+      *                                                                       *
+-     *    FreeRTOS provides completely free yet professionally developed,    *
+-     *    robust, strictly quality controlled, supported, and cross          *
+-     *    platform software that is more than just the market leader, it     *
+-     *    is the industry's de facto standard.                               *
++     *    FreeRTOS provides completely free yet professionally developed,    *
++     *    robust, strictly quality controlled, supported, and cross          *
++     *    platform software that is more than just the market leader, it     *
++     *    is the industry's de facto standard.                               *
+      *                                                                       *
+-     *    Help yourself get started quickly while simultaneously helping     *
+-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+-     *    tutorial book, reference manual, or both:                          *
+-     *    http://www.FreeRTOS.org/Documentation                              *
++     *    Help yourself get started quickly while simultaneously helping     *
++     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
++     *    tutorial book, reference manual, or both:                          *
++     *    http://www.FreeRTOS.org/Documentation                              *
+      *                                                                       *
+     ***************************************************************************
+ 
+-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+-	the FAQ page "My application does not run, what could be wrong?".  Have you
+-	defined configASSERT()?
+-
+-	http://www.FreeRTOS.org/support - In return for receiving this top quality
+-	embedded software for free we request you assist our global community by
+-	participating in the support forum.
+-
+-	http://www.FreeRTOS.org/training - Investing in training allows your team to
+-	be as productive as possible as early as possible.  Now you can receive
+-	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+-	Ltd, and the world's leading authority on the world's leading RTOS.
++    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
++	the FAQ page "My application does not run, what could be wrong?".  Have you
++	defined configASSERT()?
++
++	http://www.FreeRTOS.org/support - In return for receiving this top quality
++	embedded software for free we request you assist our global community by
++	participating in the support forum.
++
++	http://www.FreeRTOS.org/training - Investing in training allows your team to
++	be as productive as possible as early as possible.  Now you can receive
++	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
++	Ltd, and the world's leading authority on the world's leading RTOS.
+ 
+     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+ 
+-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+-
+-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+-    licenses offer ticketed support, indemnification and commercial middleware.
++    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
++    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
++
++    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
++    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
++    licenses offer ticketed support, indemnification and commercial middleware.
+ 
+     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+     engineered and independently SIL3 certified version for use in safety and
+@@ -93,11 +93,11 @@
+ 	pxList->xListEnd.pxPrevious = ( ListItem_t * ) &( pxList->xListEnd );/*lint !e826 !e740 The mini list structure is used as the list end to save RAM.  This is checked and valid. */
+ 
+ 	pxList->uxNumberOfItems = ( UBaseType_t ) 0U;
+-
+-	/* Write known values into the list if
+-	configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
+-	listSET_LIST_INTEGRITY_CHECK_1_VALUE( pxList );
+-	listSET_LIST_INTEGRITY_CHECK_2_VALUE( pxList );
++
++	/* Write known values into the list if
++	configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
++	listSET_LIST_INTEGRITY_CHECK_1_VALUE( pxList );
++	listSET_LIST_INTEGRITY_CHECK_2_VALUE( pxList );
+ }
+ /*-----------------------------------------------------------*/
+ 
+@@ -105,11 +105,11 @@
+ {
+ 	/* Make sure the list item is not recorded as being on a list. */
+ 	pxItem->pvContainer = NULL;
+-
+-	/* Write known values into the list item if
+-	configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
+-	listSET_FIRST_LIST_ITEM_INTEGRITY_CHECK_VALUE( pxItem );
+-	listSET_SECOND_LIST_ITEM_INTEGRITY_CHECK_VALUE( pxItem );
++
++	/* Write known values into the list item if
++	configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
++	listSET_FIRST_LIST_ITEM_INTEGRITY_CHECK_VALUE( pxItem );
++	listSET_SECOND_LIST_ITEM_INTEGRITY_CHECK_VALUE( pxItem );
+ }
+ /*-----------------------------------------------------------*/
+ 
+@@ -117,12 +117,12 @@
+ {
+ ListItem_t * const pxIndex = pxList->pxIndex;
+ 
+-	/* Only effective when configASSERT() is also defined, these tests may catch
+-	the list data structures being overwritten in memory.  They will not catch
+-	data errors caused by incorrect configuration or use of FreeRTOS. */
+-	listTEST_LIST_INTEGRITY( pxList );
+-	listTEST_LIST_ITEM_INTEGRITY( pxNewListItem );
+-
++	/* Only effective when configASSERT() is also defined, these tests may catch
++	the list data structures being overwritten in memory.  They will not catch
++	data errors caused by incorrect configuration or use of FreeRTOS. */
++	listTEST_LIST_INTEGRITY( pxList );
++	listTEST_LIST_ITEM_INTEGRITY( pxNewListItem );
++
+ 	/* Insert a new list item into pxList, but rather than sort the list,
+ 	makes the new list item the last item to be removed by a call to
+ 	listGET_OWNER_OF_NEXT_ENTRY(). */
+@@ -143,20 +143,20 @@
+ ListItem_t *pxIterator;
+ const TickType_t xValueOfInsertion = pxNewListItem->xItemValue;
+ 
+-	/* Only effective when configASSERT() is also defined, these tests may catch
+-	the list data structures being overwritten in memory.  They will not catch
+-	data errors caused by incorrect configuration or use of FreeRTOS. */
+-	listTEST_LIST_INTEGRITY( pxList );
+-	listTEST_LIST_ITEM_INTEGRITY( pxNewListItem );
+-
++	/* Only effective when configASSERT() is also defined, these tests may catch
++	the list data structures being overwritten in memory.  They will not catch
++	data errors caused by incorrect configuration or use of FreeRTOS. */
++	listTEST_LIST_INTEGRITY( pxList );
++	listTEST_LIST_ITEM_INTEGRITY( pxNewListItem );
++
+ 	/* Insert the new list item into the list, sorted in xItemValue order.
+ 
+-	If the list already contains a list item with the same item value then the
+-	new list item should be placed after it.  This ensures that TCB's which are
+-	stored in ready lists (all of which have the same xItemValue value) get a
+-	share of the CPU.  However, if the xItemValue is the same as the back marker
+-	the iteration loop below will not end.  Therefore the value is checked
+-	first, and the algorithm slightly modified if necessary. */
++	If the list already contains a list item with the same item value then the
++	new list item should be placed after it.  This ensures that TCB's which are
++	stored in ready lists (all of which have the same xItemValue value) get a
++	share of the CPU.  However, if the xItemValue is the same as the back marker
++	the iteration loop below will not end.  Therefore the value is checked
++	first, and the algorithm slightly modified if necessary. */
+ 	if( xValueOfInsertion == portMAX_DELAY )
+ 	{
+ 		pxIterator = pxList->xListEnd.pxPrevious;
+@@ -164,19 +164,19 @@
+ 	else
+ 	{
+ 		/* *** NOTE ***********************************************************
+-		If you find your application is crashing here then likely causes are
+-		listed below.  In addition see http://www.freertos.org/FAQHelp.html for
+-		more tips, and ensure configASSERT() is defined!
+-		http://www.freertos.org/a00110.html#configASSERT
+-
++		If you find your application is crashing here then likely causes are
++		listed below.  In addition see http://www.freertos.org/FAQHelp.html for
++		more tips, and ensure configASSERT() is defined!
++		http://www.freertos.org/a00110.html#configASSERT
++
+ 			1) Stack overflow -
+ 			   see http://www.freertos.org/Stacks-and-stack-overflow-checking.html
+-			2) Incorrect interrupt priority assignment, especially on Cortex-M
++			2) Incorrect interrupt priority assignment, especially on Cortex-M
+ 			   parts where numerically high priority values denote low actual
+-			   interrupt priorities, which can seem counter intuitive.  See
+-			   http://www.freertos.org/RTOS-Cortex-M3-M4.html and the definition
+-			   of configMAX_SYSCALL_INTERRUPT_PRIORITY on
+-			   http://www.freertos.org/a00110.html
++			   interrupt priorities, which can seem counter intuitive.  See
++			   http://www.freertos.org/RTOS-Cortex-M3-M4.html and the definition
++			   of configMAX_SYSCALL_INTERRUPT_PRIORITY on
++			   http://www.freertos.org/a00110.html
+ 			3) Calling an API function from within a critical section or when
+ 			   the scheduler is suspended, or calling an API function that does
+ 			   not end in "FromISR" from an interrupt.
+@@ -187,8 +187,8 @@
+ 
+ 		for( pxIterator = ( ListItem_t * ) &( pxList->xListEnd ); pxIterator->pxNext->xItemValue <= xValueOfInsertion; pxIterator = pxIterator->pxNext ) /*lint !e826 !e740 The mini list structure is used as the list end to save RAM.  This is checked and valid. */
+ 		{
+-			/* There is nothing to do here, just iterating to the wanted
+-			insertion position. */
++			/* There is nothing to do here, just iterating to the wanted
++			insertion position. */
+ 		}
+ 	}
+ 
+Common subdirectories: Source/portable and O-Source/portable
+diff -u Source/queue.c O-Source/queue.c
+--- Source/queue.c	2015-01-16 12:44:00.000000000 -0800
++++ O-Source/queue.c	2018-05-10 09:42:52.000000000 -0700
+@@ -1,5 +1,5 @@
+ /*
+-    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
++    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
+     All rights reserved
+ 
+     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+@@ -10,55 +10,55 @@
+     the terms of the GNU General Public License (version 2) as published by the
+     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+ 
+-	***************************************************************************
+-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
+-    >>!   obliged to provide the source code for proprietary components     !<<
+-    >>!   outside of the FreeRTOS kernel.                                   !<<
+-	***************************************************************************
++	***************************************************************************
++    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
++    >>!   distribute a combined work that includes FreeRTOS without being   !<<
++    >>!   obliged to provide the source code for proprietary components     !<<
++    >>!   outside of the FreeRTOS kernel.                                   !<<
++	***************************************************************************
+ 
+     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
++    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+     link: http://www.freertos.org/a00114.html
+ 
+     ***************************************************************************
+      *                                                                       *
+-     *    FreeRTOS provides completely free yet professionally developed,    *
+-     *    robust, strictly quality controlled, supported, and cross          *
+-     *    platform software that is more than just the market leader, it     *
+-     *    is the industry's de facto standard.                               *
++     *    FreeRTOS provides completely free yet professionally developed,    *
++     *    robust, strictly quality controlled, supported, and cross          *
++     *    platform software that is more than just the market leader, it     *
++     *    is the industry's de facto standard.                               *
+      *                                                                       *
+-     *    Help yourself get started quickly while simultaneously helping     *
+-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+-     *    tutorial book, reference manual, or both:                          *
+-     *    http://www.FreeRTOS.org/Documentation                              *
++     *    Help yourself get started quickly while simultaneously helping     *
++     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
++     *    tutorial book, reference manual, or both:                          *
++     *    http://www.FreeRTOS.org/Documentation                              *
+      *                                                                       *
+     ***************************************************************************
+ 
+-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+-	the FAQ page "My application does not run, what could be wrong?".  Have you
+-	defined configASSERT()?
+-
+-	http://www.FreeRTOS.org/support - In return for receiving this top quality
+-	embedded software for free we request you assist our global community by
+-	participating in the support forum.
+-
+-	http://www.FreeRTOS.org/training - Investing in training allows your team to
+-	be as productive as possible as early as possible.  Now you can receive
+-	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+-	Ltd, and the world's leading authority on the world's leading RTOS.
++    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
++	the FAQ page "My application does not run, what could be wrong?".  Have you
++	defined configASSERT()?
++
++	http://www.FreeRTOS.org/support - In return for receiving this top quality
++	embedded software for free we request you assist our global community by
++	participating in the support forum.
++
++	http://www.FreeRTOS.org/training - Investing in training allows your team to
++	be as productive as possible as early as possible.  Now you can receive
++	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
++	Ltd, and the world's leading authority on the world's leading RTOS.
+ 
+     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+ 
+-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+-
+-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+-    licenses offer ticketed support, indemnification and commercial middleware.
++    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
++    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
++
++    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
++    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
++    licenses offer ticketed support, indemnification and commercial middleware.
+ 
+     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+     engineered and independently SIL3 certified version for use in safety and
+@@ -124,8 +124,8 @@
+ 
+ /*
+  * Definition of the queue used by the scheduler.
+- * Items are queued by copy, not reference.  See the following link for the
+- * rationale: http://www.freertos.org/Embedded-RTOS-Queues.html
++ * Items are queued by copy, not reference.  See the following link for the
++ * rationale: http://www.freertos.org/Embedded-RTOS-Queues.html
+  */
+ typedef struct QueueDefinition
+ {
+@@ -221,7 +221,7 @@
+  * Copies an item into the queue, either at the front of the queue or the
+  * back of the queue.
+  */
+-static BaseType_t prvCopyDataToQueue( Queue_t * const pxQueue, const void *pvItemToQueue, const BaseType_t xPosition ) PRIVILEGED_FUNCTION;
++static BaseType_t prvCopyDataToQueue( Queue_t * const pxQueue, const void *pvItemToQueue, const BaseType_t xPosition ) PRIVILEGED_FUNCTION;
+ 
+ /*
+  * Copies an item out of a queue.
+@@ -315,68 +315,68 @@
+ Queue_t *pxNewQueue;
+ size_t xQueueSizeInBytes;
+ QueueHandle_t xReturn = NULL;
+-int8_t *pcAllocatedBuffer;
++int8_t *pcAllocatedBuffer;
+ 
+ 	/* Remove compiler warnings about unused parameters should
+ 	configUSE_TRACE_FACILITY not be set to 1. */
+ 	( void ) ucQueueType;
+ 
+-	configASSERT( uxQueueLength > ( UBaseType_t ) 0 );
+-
+-	if( uxItemSize == ( UBaseType_t ) 0 )
+-	{
+-		/* There is not going to be a queue storage area. */
+-		xQueueSizeInBytes = ( size_t ) 0;
+-	}
+-	else
+-	{
+-		/* The queue is one byte longer than asked for to make wrap checking
+-		easier/faster. */
+-		xQueueSizeInBytes = ( size_t ) ( uxQueueLength * uxItemSize ) + ( size_t ) 1; /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+-	}
+-
+-	/* Allocate the new queue structure and storage area. */
+-	pcAllocatedBuffer = ( int8_t * ) pvPortMalloc( sizeof( Queue_t ) + xQueueSizeInBytes );
+-
+-	if( pcAllocatedBuffer != NULL )
+-	{
+-		pxNewQueue = ( Queue_t * ) pcAllocatedBuffer; /*lint !e826 MISRA The buffer cannot be to small because it was dimensioned by sizeof( Queue_t ) + xQueueSizeInBytes. */
+-
+-		if( uxItemSize == ( UBaseType_t ) 0 )
+-		{
+-			/* No RAM was allocated for the queue storage area, but PC head
+-			cannot be set to NULL because NULL is used as a key to say the queue
+-			is used as a mutex.  Therefore just set pcHead to point to the queue
+-			as a benign value that is known to be within the memory map. */
+-			pxNewQueue->pcHead = ( int8_t * ) pxNewQueue;
++	configASSERT( uxQueueLength > ( UBaseType_t ) 0 );
++
++	if( uxItemSize == ( UBaseType_t ) 0 )
++	{
++		/* There is not going to be a queue storage area. */
++		xQueueSizeInBytes = ( size_t ) 0;
++	}
++	else
++	{
++		/* The queue is one byte longer than asked for to make wrap checking
++		easier/faster. */
++		xQueueSizeInBytes = ( size_t ) ( uxQueueLength * uxItemSize ) + ( size_t ) 1; /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
++	}
++
++	/* Allocate the new queue structure and storage area. */
++	pcAllocatedBuffer = ( int8_t * ) pvPortMalloc( sizeof( Queue_t ) + xQueueSizeInBytes );
++
++	if( pcAllocatedBuffer != NULL )
++	{
++		pxNewQueue = ( Queue_t * ) pcAllocatedBuffer; /*lint !e826 MISRA The buffer cannot be to small because it was dimensioned by sizeof( Queue_t ) + xQueueSizeInBytes. */
++
++		if( uxItemSize == ( UBaseType_t ) 0 )
++		{
++			/* No RAM was allocated for the queue storage area, but PC head
++			cannot be set to NULL because NULL is used as a key to say the queue
++			is used as a mutex.  Therefore just set pcHead to point to the queue
++			as a benign value that is known to be within the memory map. */
++			pxNewQueue->pcHead = ( int8_t * ) pxNewQueue;
+ 		}
+ 		else
+ 		{
+-			/* Jump past the queue structure to find the location of the queue
+-			storage area - adding the padding bytes to get a better alignment. */
+-			pxNewQueue->pcHead = pcAllocatedBuffer + sizeof( Queue_t );
+-		}
+-
+-		/* Initialise the queue members as described above where the queue type
+-		is defined. */
+-		pxNewQueue->uxLength = uxQueueLength;
+-		pxNewQueue->uxItemSize = uxItemSize;
+-		( void ) xQueueGenericReset( pxNewQueue, pdTRUE );
+-
+-		#if ( configUSE_TRACE_FACILITY == 1 )
+-		{
+-			pxNewQueue->ucQueueType = ucQueueType;
+-		}
+-		#endif /* configUSE_TRACE_FACILITY */
+-
+-		#if( configUSE_QUEUE_SETS == 1 )
+-		{
+-			pxNewQueue->pxQueueSetContainer = NULL;
+-		}
+-		#endif /* configUSE_QUEUE_SETS */
+-
+-		traceQUEUE_CREATE( pxNewQueue );
+-		xReturn = pxNewQueue;
++			/* Jump past the queue structure to find the location of the queue
++			storage area - adding the padding bytes to get a better alignment. */
++			pxNewQueue->pcHead = pcAllocatedBuffer + sizeof( Queue_t );
++		}
++
++		/* Initialise the queue members as described above where the queue type
++		is defined. */
++		pxNewQueue->uxLength = uxQueueLength;
++		pxNewQueue->uxItemSize = uxItemSize;
++		( void ) xQueueGenericReset( pxNewQueue, pdTRUE );
++
++		#if ( configUSE_TRACE_FACILITY == 1 )
++		{
++			pxNewQueue->ucQueueType = ucQueueType;
++		}
++		#endif /* configUSE_TRACE_FACILITY */
++
++		#if( configUSE_QUEUE_SETS == 1 )
++		{
++			pxNewQueue->pxQueueSetContainer = NULL;
++		}
++		#endif /* configUSE_QUEUE_SETS */
++
++		traceQUEUE_CREATE( pxNewQueue );
++		xReturn = pxNewQueue;
+ 	}
+ 	else
+ 	{
+@@ -479,7 +479,7 @@
+ 		taskEXIT_CRITICAL();
+ 
+ 		return pxReturn;
+-	} /*lint !e818 xSemaphore cannot be a pointer to const because it is a typedef. */
++	}
+ 
+ #endif
+ /*-----------------------------------------------------------*/
+@@ -526,8 +526,8 @@
+ 		}
+ 		else
+ 		{
+-			/* The mutex cannot be given because the calling task is not the
+-			holder. */
++			/* The mutex cannot be given because the calling task is not the
++			holder. */
+ 			xReturn = pdFAIL;
+ 
+ 			traceGIVE_MUTEX_RECURSIVE_FAILED( pxMutex );
+@@ -562,9 +562,9 @@
+ 		{
+ 			xReturn = xQueueGenericReceive( pxMutex, NULL, xTicksToWait, pdFALSE );
+ 
+-			/* pdPASS will only be returned if the mutex was successfully
+-			obtained.  The calling task may have entered the Blocked state
+-			before reaching here. */
++			/* pdPASS will only be returned if the mutex was successfully
++			obtained.  The calling task may have entered the Blocked state
++			before reaching here. */
+ 			if( xReturn == pdPASS )
+ 			{
+ 				( pxMutex->u.uxRecursiveCallCount )++;
+@@ -612,7 +612,7 @@
+ 
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition )
+ {
+-BaseType_t xEntryTimeSet = pdFALSE, xYieldRequired;
++BaseType_t xEntryTimeSet = pdFALSE, xYieldRequired;
+ TimeOut_t xTimeOut;
+ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
+ 
+@@ -640,7 +640,7 @@
+ 			if( ( pxQueue->uxMessagesWaiting < pxQueue->uxLength ) || ( xCopyPosition == queueOVERWRITE ) )
+ 			{
+ 				traceQUEUE_SEND( pxQueue );
+-				xYieldRequired = prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
++				xYieldRequired = prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
+ 
+ 				#if ( configUSE_QUEUE_SETS == 1 )
+ 				{
+@@ -676,14 +676,14 @@
+ 							{
+ 								mtCOVERAGE_TEST_MARKER();
+ 							}
+-						}
+-						else if( xYieldRequired != pdFALSE )
+-						{
+-							/* This path is a special case that will only get
+-							executed if the task was holding multiple mutexes
+-							and the mutexes were given back in an order that is
+-							different to that in which they were taken. */
+-							queueYIELD_IF_USING_PREEMPTION();
++						}
++						else if( xYieldRequired != pdFALSE )
++						{
++							/* This path is a special case that will only get
++							executed if the task was holding multiple mutexes
++							and the mutexes were given back in an order that is
++							different to that in which they were taken. */
++							queueYIELD_IF_USING_PREEMPTION();
+ 						}
+ 						else
+ 						{
+@@ -709,14 +709,14 @@
+ 						{
+ 							mtCOVERAGE_TEST_MARKER();
+ 						}
+-					}
+-					else if( xYieldRequired != pdFALSE )
+-					{
+-						/* This path is a special case that will only get
+-						executed if the task was holding multiple mutexes and
+-						the mutexes were given back in an order that is
+-						different to that in which they were taken. */
+-						queueYIELD_IF_USING_PREEMPTION();
++					}
++					else if( xYieldRequired != pdFALSE )
++					{
++						/* This path is a special case that will only get
++						executed if the task was holding multiple mutexes and
++						the mutexes were given back in an order that is
++						different to that in which they were taken. */
++						queueYIELD_IF_USING_PREEMPTION();
+ 					}
+ 					else
+ 					{
+@@ -961,7 +961,7 @@
+ 					{
+ 						traceQUEUE_PEEK( pxQueue );
+ 
+-						/* The data is not being removed, so reset our read
++						/* The data is not being removed, so reset our read
+ 						pointer. */
+ 						pxQueue->u.pcReadFrom = pcOriginalReadPosition;
+ 
+@@ -1092,12 +1092,12 @@
+ 		{
+ 			traceQUEUE_SEND_FROM_ISR( pxQueue );
+ 
+-			/* A task can only have an inherited priority if it is a mutex
+-			holder - and if there is a mutex holder then the mutex cannot be
+-			given from an ISR.  Therefore, unlike the xQueueGenericGive()
+-			function, there is no need to determine the need for priority
+-			disinheritance here or to clear the mutex holder TCB member. */
+-			( void ) prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
++			/* A task can only have an inherited priority if it is a mutex
++			holder - and if there is a mutex holder then the mutex cannot be
++			given from an ISR.  Therefore, unlike the xQueueGenericGive()
++			function, there is no need to determine the need for priority
++			disinheritance here or to clear the mutex holder TCB member. */
++			( void ) prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
+ 
+ 			/* The event list is not altered if the queue is locked.  This will
+ 			be done when the queue is unlocked later. */
+@@ -1132,162 +1132,162 @@
+ 						{
+ 							if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+ 							{
+-								/* The task waiting has a higher priority so
+-								record that a context switch is required. */
+-								if( pxHigherPriorityTaskWoken != NULL )
+-								{
+-									*pxHigherPriorityTaskWoken = pdTRUE;
+-								}
+-								else
+-								{
+-									mtCOVERAGE_TEST_MARKER();
+-								}
+-							}
+-							else
+-							{
+-								mtCOVERAGE_TEST_MARKER();
+-							}
+-						}
+-						else
+-						{
+-							mtCOVERAGE_TEST_MARKER();
+-						}
+-					}
+-				}
+-				#else /* configUSE_QUEUE_SETS */
+-				{
+-					if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+-					{
+-						if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+-						{
+-							/* The task waiting has a higher priority so record that a
+-							context	switch is required. */
+-							if( pxHigherPriorityTaskWoken != NULL )
+-							{
+-								*pxHigherPriorityTaskWoken = pdTRUE;
+-							}
+-							else
+-							{
+-								mtCOVERAGE_TEST_MARKER();
+-							}
+-						}
+-						else
+-						{
+-							mtCOVERAGE_TEST_MARKER();
+-						}
+-					}
+-					else
+-					{
+-						mtCOVERAGE_TEST_MARKER();
+-					}
+-				}
+-				#endif /* configUSE_QUEUE_SETS */
+-			}
+-			else
+-			{
+-				/* Increment the lock count so the task that unlocks the queue
+-				knows that data was posted while it was locked. */
+-				++( pxQueue->xTxLock );
+-			}
+-
+-			xReturn = pdPASS;
+-		}
+-		else
+-		{
+-			traceQUEUE_SEND_FROM_ISR_FAILED( pxQueue );
+-			xReturn = errQUEUE_FULL;
+-		}
+-	}
+-	portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+-
+-	return xReturn;
+-}
+-/*-----------------------------------------------------------*/
+-
+-BaseType_t xQueueGiveFromISR( QueueHandle_t xQueue, BaseType_t * const pxHigherPriorityTaskWoken )
+-{
+-BaseType_t xReturn;
+-UBaseType_t uxSavedInterruptStatus;
+-Queue_t * const pxQueue = ( Queue_t * ) xQueue;
+-
+-	configASSERT( pxQueue );
+-
+-	/* xQueueGenericSendFromISR() should be used in the item size is not 0. */
+-	configASSERT( pxQueue->uxItemSize == 0 );
+-
+-	/* RTOS ports that support interrupt nesting have the concept of a maximum
+-	system call (or maximum API call) interrupt priority.  Interrupts that are
+-	above the maximum system call priority are kept permanently enabled, even
+-	when the RTOS kernel is in a critical section, but cannot make any calls to
+-	FreeRTOS API functions.  If configASSERT() is defined in FreeRTOSConfig.h
+-	then portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+-	failure if a FreeRTOS API function is called from an interrupt that has been
+-	assigned a priority above the configured maximum system call priority.
+-	Only FreeRTOS functions that end in FromISR can be called from interrupts
+-	that have been assigned a priority at or (logically) below the maximum
+-	system call	interrupt priority.  FreeRTOS maintains a separate interrupt
+-	safe API to ensure interrupt entry is as fast and as simple as possible.
+-	More information (albeit Cortex-M specific) is provided on the following
+-	link: http://www.freertos.org/RTOS-Cortex-M3-M4.html */
+-	portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+-
+-	/* Similar to xQueueGenericSendFromISR() but used with semaphores where the
+-	item size is 0.  Don't directly wake a task that was blocked on a queue
+-	read, instead return a flag to say whether a context switch is required or
+-	not (i.e. has a task with a higher priority than us been woken by this
+-	post). */
+-	uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+-	{
+-		/* When the queue is used to implement a semaphore no data is ever
+-		moved through the queue but it is still valid to see if the queue 'has
+-		space'. */
+-		if( pxQueue->uxMessagesWaiting < pxQueue->uxLength )
+-		{
+-			traceQUEUE_SEND_FROM_ISR( pxQueue );
+-
+-			/* A task can only have an inherited priority if it is a mutex
+-			holder - and if there is a mutex holder then the mutex cannot be
+-			given from an ISR.  Therefore, unlike the xQueueGenericGive()
+-			function, there is no need to determine the need for priority
+-			disinheritance here or to clear the mutex holder TCB member. */
+-
+-			++( pxQueue->uxMessagesWaiting );
+-
+-			/* The event list is not altered if the queue is locked.  This will
+-			be done when the queue is unlocked later. */
+-			if( pxQueue->xTxLock == queueUNLOCKED )
+-			{
+-				#if ( configUSE_QUEUE_SETS == 1 )
+-				{
+-					if( pxQueue->pxQueueSetContainer != NULL )
+-					{
+-						if( prvNotifyQueueSetContainer( pxQueue, queueSEND_TO_BACK ) == pdTRUE )
+-						{
+-							/* The semaphore is a member of a queue set, and
+-							posting	to the queue set caused a higher priority
+-							task to	unblock.  A context switch is required. */
+-							if( pxHigherPriorityTaskWoken != NULL )
+-							{
+-								*pxHigherPriorityTaskWoken = pdTRUE;
+-							}
+-							else
+-							{
+-								mtCOVERAGE_TEST_MARKER();
+-							}
+-						}
+-						else
+-						{
+-							mtCOVERAGE_TEST_MARKER();
+-						}
+-					}
+-					else
+-					{
+-						if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+-						{
+-							if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+-							{
+-								/* The task waiting has a higher priority so
+-								record that a context switch is required. */
++								/* The task waiting has a higher priority so
++								record that a context switch is required. */
++								if( pxHigherPriorityTaskWoken != NULL )
++								{
++									*pxHigherPriorityTaskWoken = pdTRUE;
++								}
++								else
++								{
++									mtCOVERAGE_TEST_MARKER();
++								}
++							}
++							else
++							{
++								mtCOVERAGE_TEST_MARKER();
++							}
++						}
++						else
++						{
++							mtCOVERAGE_TEST_MARKER();
++						}
++					}
++				}
++				#else /* configUSE_QUEUE_SETS */
++				{
++					if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
++					{
++						if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
++						{
++							/* The task waiting has a higher priority so record that a
++							context	switch is required. */
++							if( pxHigherPriorityTaskWoken != NULL )
++							{
++								*pxHigherPriorityTaskWoken = pdTRUE;
++							}
++							else
++							{
++								mtCOVERAGE_TEST_MARKER();
++							}
++						}
++						else
++						{
++							mtCOVERAGE_TEST_MARKER();
++						}
++					}
++					else
++					{
++						mtCOVERAGE_TEST_MARKER();
++					}
++				}
++				#endif /* configUSE_QUEUE_SETS */
++			}
++			else
++			{
++				/* Increment the lock count so the task that unlocks the queue
++				knows that data was posted while it was locked. */
++				++( pxQueue->xTxLock );
++			}
++
++			xReturn = pdPASS;
++		}
++		else
++		{
++			traceQUEUE_SEND_FROM_ISR_FAILED( pxQueue );
++			xReturn = errQUEUE_FULL;
++		}
++	}
++	portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
++
++	return xReturn;
++}
++/*-----------------------------------------------------------*/
++
++BaseType_t xQueueGiveFromISR( QueueHandle_t xQueue, BaseType_t * const pxHigherPriorityTaskWoken )
++{
++BaseType_t xReturn;
++UBaseType_t uxSavedInterruptStatus;
++Queue_t * const pxQueue = ( Queue_t * ) xQueue;
++
++	configASSERT( pxQueue );
++
++	/* xQueueGenericSendFromISR() should be used in the item size is not 0. */
++	configASSERT( pxQueue->uxItemSize == 0 );
++
++	/* RTOS ports that support interrupt nesting have the concept of a maximum
++	system call (or maximum API call) interrupt priority.  Interrupts that are
++	above the maximum system call priority are kept permanently enabled, even
++	when the RTOS kernel is in a critical section, but cannot make any calls to
++	FreeRTOS API functions.  If configASSERT() is defined in FreeRTOSConfig.h
++	then portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
++	failure if a FreeRTOS API function is called from an interrupt that has been
++	assigned a priority above the configured maximum system call priority.
++	Only FreeRTOS functions that end in FromISR can be called from interrupts
++	that have been assigned a priority at or (logically) below the maximum
++	system call	interrupt priority.  FreeRTOS maintains a separate interrupt
++	safe API to ensure interrupt entry is as fast and as simple as possible.
++	More information (albeit Cortex-M specific) is provided on the following
++	link: http://www.freertos.org/RTOS-Cortex-M3-M4.html */
++	portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
++
++	/* Similar to xQueueGenericSendFromISR() but used with semaphores where the
++	item size is 0.  Don't directly wake a task that was blocked on a queue
++	read, instead return a flag to say whether a context switch is required or
++	not (i.e. has a task with a higher priority than us been woken by this
++	post). */
++	uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
++	{
++		/* When the queue is used to implement a semaphore no data is ever
++		moved through the queue but it is still valid to see if the queue 'has
++		space'. */
++		if( pxQueue->uxMessagesWaiting < pxQueue->uxLength )
++		{
++			traceQUEUE_SEND_FROM_ISR( pxQueue );
++
++			/* A task can only have an inherited priority if it is a mutex
++			holder - and if there is a mutex holder then the mutex cannot be
++			given from an ISR.  Therefore, unlike the xQueueGenericGive()
++			function, there is no need to determine the need for priority
++			disinheritance here or to clear the mutex holder TCB member. */
++
++			++( pxQueue->uxMessagesWaiting );
++
++			/* The event list is not altered if the queue is locked.  This will
++			be done when the queue is unlocked later. */
++			if( pxQueue->xTxLock == queueUNLOCKED )
++			{
++				#if ( configUSE_QUEUE_SETS == 1 )
++				{
++					if( pxQueue->pxQueueSetContainer != NULL )
++					{
++						if( prvNotifyQueueSetContainer( pxQueue, queueSEND_TO_BACK ) == pdTRUE )
++						{
++							/* The semaphore is a member of a queue set, and
++							posting	to the queue set caused a higher priority
++							task to	unblock.  A context switch is required. */
++							if( pxHigherPriorityTaskWoken != NULL )
++							{
++								*pxHigherPriorityTaskWoken = pdTRUE;
++							}
++							else
++							{
++								mtCOVERAGE_TEST_MARKER();
++							}
++						}
++						else
++						{
++							mtCOVERAGE_TEST_MARKER();
++						}
++					}
++					else
++					{
++						if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
++						{
++							if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
++							{
++								/* The task waiting has a higher priority so
++								record that a context switch is required. */
+ 								if( pxHigherPriorityTaskWoken != NULL )
+ 								{
+ 									*pxHigherPriorityTaskWoken = pdTRUE;
+@@ -1381,8 +1381,8 @@
+ 	{
+ 		taskENTER_CRITICAL();
+ 		{
+-			/* Is there data in the queue now?  To be running the calling task
+-			must be	the highest priority task wanting to access the queue. */
++			/* Is there data in the queue now?  To be running the calling task
++			must be	the highest priority task wanting to access the queue. */
+ 			if( pxQueue->uxMessagesWaiting > ( UBaseType_t ) 0 )
+ 			{
+ 				/* Remember the read position in case the queue is only being
+@@ -1404,14 +1404,14 @@
+ 						{
+ 							/* Record the information required to implement
+ 							priority inheritance should it become necessary. */
+-							pxQueue->pxMutexHolder = ( int8_t * ) pvTaskIncrementMutexHeldCount(); /*lint !e961 Cast is not redundant as TaskHandle_t is a typedef. */
++							pxQueue->pxMutexHolder = ( int8_t * ) pvTaskIncrementMutexHeldCount(); /*lint !e961 Cast is not redundant as TaskHandle_t is a typedef. */
+ 						}
+ 						else
+ 						{
+ 							mtCOVERAGE_TEST_MARKER();
+ 						}
+ 					}
+-					#endif /* configUSE_MUTEXES */
++					#endif /* configUSE_MUTEXES */
+ 
+ 					if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToSend ) ) == pdFALSE )
+ 					{
+@@ -1643,7 +1643,7 @@
+ 
+ 	configASSERT( pxQueue );
+ 	configASSERT( !( ( pvBuffer == NULL ) && ( pxQueue->uxItemSize != ( UBaseType_t ) 0U ) ) );
+-	configASSERT( pxQueue->uxItemSize != 0 ); /* Can't peek a semaphore. */
++	configASSERT( pxQueue->uxItemSize != 0 ); /* Can't peek a semaphore. */
+ 
+ 	/* RTOS ports that support interrupt nesting have the concept of a maximum
+ 	system call (or maximum API call) interrupt priority.  Interrupts that are
+@@ -1780,10 +1780,10 @@
+ #endif /* configUSE_TRACE_FACILITY */
+ /*-----------------------------------------------------------*/
+ 
+-static BaseType_t prvCopyDataToQueue( Queue_t * const pxQueue, const void *pvItemToQueue, const BaseType_t xPosition )
++static BaseType_t prvCopyDataToQueue( Queue_t * const pxQueue, const void *pvItemToQueue, const BaseType_t xPosition )
+ {
+-BaseType_t xReturn = pdFALSE;
+-
++BaseType_t xReturn = pdFALSE;
++
+ 	if( pxQueue->uxItemSize == ( UBaseType_t ) 0 )
+ 	{
+ 		#if ( configUSE_MUTEXES == 1 )
+@@ -1791,7 +1791,7 @@
+ 			if( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX )
+ 			{
+ 				/* The mutex is no longer being held. */
+-				xReturn = xTaskPriorityDisinherit( ( void * ) pxQueue->pxMutexHolder );
++				xReturn = xTaskPriorityDisinherit( ( void * ) pxQueue->pxMutexHolder );
+ 				pxQueue->pxMutexHolder = NULL;
+ 			}
+ 			else
+@@ -1849,14 +1849,14 @@
+ 	}
+ 
+ 	++( pxQueue->uxMessagesWaiting );
+-
+-	return xReturn;
++
++	return xReturn;
+ }
+ /*-----------------------------------------------------------*/
+ 
+ static void prvCopyDataFromQueue( Queue_t * const pxQueue, void * const pvBuffer )
+ {
+-	if( pxQueue->uxItemSize != ( UBaseType_t ) 0 )
++	if( pxQueue->uxItemSize != ( UBaseType_t ) 0 )
+ 	{
+ 		pxQueue->u.pcReadFrom += pxQueue->uxItemSize;
+ 		if( pxQueue->u.pcReadFrom >= pxQueue->pcTail ) /*lint !e946 MISRA exception justified as use of the relational operator is the cleanest solutions. */
+@@ -2556,9 +2556,9 @@
+ 		if( pxQueueSetContainer->uxMessagesWaiting < pxQueueSetContainer->uxLength )
+ 		{
+ 			traceQUEUE_SEND( pxQueueSetContainer );
+-			/* The data copied is the handle of the queue that contains data. */
+-			xReturn = prvCopyDataToQueue( pxQueueSetContainer, &pxQueue, xCopyPosition );
+-
++			/* The data copied is the handle of the queue that contains data. */
++			xReturn = prvCopyDataToQueue( pxQueueSetContainer, &pxQueue, xCopyPosition );
++
+ 			if( listLIST_IS_EMPTY( &( pxQueueSetContainer->xTasksWaitingToReceive ) ) == pdFALSE )
+ 			{
+ 				if( xTaskRemoveFromEventList( &( pxQueueSetContainer->xTasksWaitingToReceive ) ) != pdFALSE )
+diff -u Source/tasks.c O-Source/tasks.c
+--- Source/tasks.c	2015-01-16 12:44:04.000000000 -0800
++++ O-Source/tasks.c	2018-05-10 09:47:01.000000000 -0700
+@@ -1,5 +1,5 @@
+ /*
+-    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
++    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
+     All rights reserved
+ 
+     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+@@ -10,55 +10,55 @@
+     the terms of the GNU General Public License (version 2) as published by the
+     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+ 
+-	***************************************************************************
+-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
+-    >>!   obliged to provide the source code for proprietary components     !<<
+-    >>!   outside of the FreeRTOS kernel.                                   !<<
+-	***************************************************************************
++	***************************************************************************
++    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
++    >>!   distribute a combined work that includes FreeRTOS without being   !<<
++    >>!   obliged to provide the source code for proprietary components     !<<
++    >>!   outside of the FreeRTOS kernel.                                   !<<
++	***************************************************************************
+ 
+     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
++    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+     link: http://www.freertos.org/a00114.html
+ 
+     ***************************************************************************
+      *                                                                       *
+-     *    FreeRTOS provides completely free yet professionally developed,    *
+-     *    robust, strictly quality controlled, supported, and cross          *
+-     *    platform software that is more than just the market leader, it     *
+-     *    is the industry's de facto standard.                               *
++     *    FreeRTOS provides completely free yet professionally developed,    *
++     *    robust, strictly quality controlled, supported, and cross          *
++     *    platform software that is more than just the market leader, it     *
++     *    is the industry's de facto standard.                               *
+      *                                                                       *
+-     *    Help yourself get started quickly while simultaneously helping     *
+-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+-     *    tutorial book, reference manual, or both:                          *
+-     *    http://www.FreeRTOS.org/Documentation                              *
++     *    Help yourself get started quickly while simultaneously helping     *
++     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
++     *    tutorial book, reference manual, or both:                          *
++     *    http://www.FreeRTOS.org/Documentation                              *
+      *                                                                       *
+     ***************************************************************************
+ 
+-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+-	the FAQ page "My application does not run, what could be wrong?".  Have you
+-	defined configASSERT()?
+-
+-	http://www.FreeRTOS.org/support - In return for receiving this top quality
+-	embedded software for free we request you assist our global community by
+-	participating in the support forum.
+-
+-	http://www.FreeRTOS.org/training - Investing in training allows your team to
+-	be as productive as possible as early as possible.  Now you can receive
+-	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+-	Ltd, and the world's leading authority on the world's leading RTOS.
++    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
++	the FAQ page "My application does not run, what could be wrong?".  Have you
++	defined configASSERT()?
++
++	http://www.FreeRTOS.org/support - In return for receiving this top quality
++	embedded software for free we request you assist our global community by
++	participating in the support forum.
++
++	http://www.FreeRTOS.org/training - Investing in training allows your team to
++	be as productive as possible as early as possible.  Now you can receive
++	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
++	Ltd, and the world's leading authority on the world's leading RTOS.
+ 
+     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+ 
+-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+-
+-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+-    licenses offer ticketed support, indemnification and commercial middleware.
++    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
++    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
++
++    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
++    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
++    licenses offer ticketed support, indemnification and commercial middleware.
+ 
+     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+     engineered and independently SIL3 certified version for use in safety and
+@@ -88,8 +88,8 @@
+ privileged Vs unprivileged linkage and placement. */
+ #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE /*lint !e961 !e750. */
+ 
+-/* Set configUSE_STATS_FORMATTING_FUNCTIONS to 2 to include the stats formatting
+-functions but without including stdio.h here. */
++/* Set configUSE_STATS_FORMATTING_FUNCTIONS to 2 to include the stats formatting
++functions but without including stdio.h here. */
+ #if ( configUSE_STATS_FORMATTING_FUNCTIONS == 1 )
+ 	/* At the bottom of this file are two optional functions that can be used
+ 	to generate human readable text from the raw data generated by the
+@@ -118,14 +118,14 @@
+ 	#define taskYIELD_IF_USING_PREEMPTION() portYIELD_WITHIN_API()
+ #endif
+ 
+-/* Value that can be assigned to the eNotifyState member of the TCB. */
+-typedef enum
+-{
+-	eNotWaitingNotification = 0,
+-	eWaitingNotification,
+-	eNotified
+-} eNotifyValue;
+-
++/* Value that can be assigned to the eNotifyState member of the TCB. */
++typedef enum
++{
++	eNotWaitingNotification = 0,
++	eWaitingNotification,
++	eNotified
++} eNotifyValue;
++
+ /*
+  * Task control block.  A task control block (TCB) is allocated for each task,
+  * and stores task state information, including a pointer to the task's context
+@@ -137,7 +137,7 @@
+ 
+ 	#if ( portUSING_MPU_WRAPPERS == 1 )
+ 		xMPU_SETTINGS	xMPUSettings;		/*< The MPU settings are defined as part of the port layer.  THIS MUST BE THE SECOND MEMBER OF THE TCB STRUCT. */
+-		BaseType_t		xUsingStaticallyAllocatedStack; /* Set to pdTRUE if the stack is a statically allocated array, and pdFALSE if the stack is dynamically allocated. */
++		BaseType_t		xUsingStaticallyAllocatedStack; /* Set to pdTRUE if the stack is a statically allocated array, and pdFALSE if the stack is dynamically allocated. */
+ 	#endif
+ 
+ 	ListItem_t			xGenericListItem;	/*< The list that the state list item of a task is reference from denotes the state of that task (Ready, Blocked, Suspended ). */
+@@ -161,7 +161,7 @@
+ 
+ 	#if ( configUSE_MUTEXES == 1 )
+ 		UBaseType_t 	uxBasePriority;		/*< The priority last assigned to the task - used by the priority inheritance mechanism. */
+-		UBaseType_t 	uxMutexesHeld;
++		UBaseType_t 	uxMutexesHeld;
+ 	#endif
+ 
+ 	#if ( configUSE_APPLICATION_TASK_TAG == 1 )
+@@ -183,11 +183,11 @@
+ 		struct 	_reent xNewLib_reent;
+ 	#endif
+ 
+-	#if ( configUSE_TASK_NOTIFICATIONS == 1 )
+-		volatile uint32_t ulNotifiedValue;
+-		volatile eNotifyValue eNotifyState;
+-	#endif
+-
++	#if ( configUSE_TASK_NOTIFICATIONS == 1 )
++		volatile uint32_t ulNotifiedValue;
++		volatile eNotifyValue eNotifyState;
++	#endif
++
+ } tskTCB;
+ 
+ /* The old tskTCB name is maintained above then typedefed to the new TCB_t name
+@@ -246,8 +246,8 @@
+ PRIVILEGED_DATA static volatile TickType_t xNextTaskUnblockTime		= portMAX_DELAY;
+ 
+ /* Context switches are held pending while the scheduler is suspended.  Also,
+-interrupts must not manipulate the xGenericListItem of a TCB, or any of the
+-lists the xGenericListItem can be referenced from, if the scheduler is suspended.
++interrupts must not manipulate the xGenericListItem of a TCB, or any of the
++lists the xGenericListItem can be referenced from, if the scheduler is suspended.
+ If an interrupt needs to unblock a task while the scheduler is suspended then it
+ moves the task's event list item into the xPendingReadyList, ready for the
+ kernel to move the task from the pending ready list into the real ready list
+@@ -348,12 +348,12 @@
+ 	/* A port optimised version is provided, call it only if the TCB being reset
+ 	is being referenced from a ready list.  If it is referenced from a delayed
+ 	or suspended list then it won't be in a ready list. */
+-	#define taskRESET_READY_PRIORITY( uxPriority )														\
+-	{																									\
+-		if( listCURRENT_LIST_LENGTH( &( pxReadyTasksLists[ ( uxPriority ) ] ) ) == ( UBaseType_t ) 0 )	\
+-		{																								\
+-			portRESET_READY_PRIORITY( ( uxPriority ), ( uxTopReadyPriority ) );							\
+-		}																								\
++	#define taskRESET_READY_PRIORITY( uxPriority )														\
++	{																									\
++		if( listCURRENT_LIST_LENGTH( &( pxReadyTasksLists[ ( uxPriority ) ] ) ) == ( UBaseType_t ) 0 )	\
++		{																								\
++			portRESET_READY_PRIORITY( ( uxPriority ), ( uxTopReadyPriority ) );							\
++		}																								\
+ 	}
+ 
+ #endif /* configUSE_PORT_OPTIMISED_TASK_SELECTION */
+@@ -432,9 +432,9 @@
+  * currently in the Suspended state, or pdFALSE if the task referenced by xTask
+  * is in any other state.
+  */
+-#if ( INCLUDE_vTaskSuspend == 1 )
+-	static BaseType_t prvTaskIsTaskSuspended( const TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
+-#endif /* INCLUDE_vTaskSuspend */
++#if ( INCLUDE_vTaskSuspend == 1 )
++	static BaseType_t prvTaskIsTaskSuspended( const TaskHandle_t xTask ) PRIVILEGED_FUNCTION;
++#endif /* INCLUDE_vTaskSuspend */
+ 
+ /*
+  * Utility to ready all the lists used by the scheduler.  This is called
+@@ -533,22 +533,22 @@
+  */
+ static void prvResetNextTaskUnblockTime( void );
+ 
+-#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
+-
+-	/*
+-	 * Helper function used to pad task names with spaces when printing out
+-	 * human readable tables of task information.
+-	 */
+-	static char *prvWriteNameToBuffer( char *pcBuffer, const char *pcTaskName );
+-
+-#endif
++#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
++
++	/*
++	 * Helper function used to pad task names with spaces when printing out
++	 * human readable tables of task information.
++	 */
++	static char *prvWriteNameToBuffer( char *pcBuffer, const char *pcTaskName );
++
++#endif
+ /*-----------------------------------------------------------*/
+ 
+ BaseType_t xTaskGenericCreate( TaskFunction_t pxTaskCode, const char * const pcName, const uint16_t usStackDepth, void * const pvParameters, UBaseType_t uxPriority, TaskHandle_t * const pxCreatedTask, StackType_t * const puxStackBuffer, const MemoryRegion_t * const xRegions ) /*lint !e971 Unqualified char types are allowed for strings and single characters only. */
+ {
+ BaseType_t xReturn;
+ TCB_t * pxNewTCB;
+-StackType_t *pxTopOfStack;
++StackType_t *pxTopOfStack;
+ 
+ 	configASSERT( pxTaskCode );
+ 	configASSERT( ( ( uxPriority & ( ~portPRIVILEGE_BIT ) ) < configMAX_PRIORITIES ) );
+@@ -571,20 +571,20 @@
+ 				xRunPrivileged = pdFALSE;
+ 			}
+ 			uxPriority &= ~portPRIVILEGE_BIT;
+-
+-			if( puxStackBuffer != NULL )
+-			{
+-				/* The application provided its own stack.  Note this so no
+-				attempt is made to delete the stack should that task be
+-				deleted. */
+-				pxNewTCB->xUsingStaticallyAllocatedStack = pdTRUE;
+-			}
+-			else
+-			{
+-				/* The stack was allocated dynamically.  Note this so it can be
+-				deleted again if the task is deleted. */
+-				pxNewTCB->xUsingStaticallyAllocatedStack = pdFALSE;
+-			}
++
++			if( puxStackBuffer != NULL )
++			{
++				/* The application provided its own stack.  Note this so no
++				attempt is made to delete the stack should that task be
++				deleted. */
++				pxNewTCB->xUsingStaticallyAllocatedStack = pdTRUE;
++			}
++			else
++			{
++				/* The stack was allocated dynamically.  Note this so it can be
++				deleted again if the task is deleted. */
++				pxNewTCB->xUsingStaticallyAllocatedStack = pdFALSE;
++			}
+ 		#endif /* portUSING_MPU_WRAPPERS == 1 */
+ 
+ 		/* Calculate the top of stack address.  This depends on whether the
+@@ -597,14 +597,14 @@
+ 			pxTopOfStack = ( StackType_t * ) ( ( ( portPOINTER_SIZE_TYPE ) pxTopOfStack ) & ( ( portPOINTER_SIZE_TYPE ) ~portBYTE_ALIGNMENT_MASK  ) ); /*lint !e923 MISRA exception.  Avoiding casts between pointers and integers is not practical.  Size differences accounted for using portPOINTER_SIZE_TYPE type. */
+ 
+ 			/* Check the alignment of the calculated top of stack is correct. */
+-			configASSERT( ( ( ( portPOINTER_SIZE_TYPE ) pxTopOfStack & ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) == 0UL ) );
++			configASSERT( ( ( ( portPOINTER_SIZE_TYPE ) pxTopOfStack & ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) == 0UL ) );
+ 		}
+ 		#else /* portSTACK_GROWTH */
+ 		{
+ 			pxTopOfStack = pxNewTCB->pxStack;
+ 
+ 			/* Check the alignment of the stack buffer is correct. */
+-			configASSERT( ( ( ( portPOINTER_SIZE_TYPE ) pxNewTCB->pxStack & ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) == 0UL ) );
++			configASSERT( ( ( ( portPOINTER_SIZE_TYPE ) pxNewTCB->pxStack & ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) == 0UL ) );
+ 
+ 			/* If we want to use stack checking on architectures that use
+ 			a positive stack growth direction then we also need to store the
+@@ -805,11 +805,11 @@
+ 			{
+ 				/* Reset the next expected unblock time in case it referred to
+ 				the task that has just been deleted. */
+-				taskENTER_CRITICAL();
+-				{
+-					prvResetNextTaskUnblockTime();
+-				}
+-				taskEXIT_CRITICAL();
++				taskENTER_CRITICAL();
++				{
++					prvResetNextTaskUnblockTime();
++				}
++				taskEXIT_CRITICAL();
+ 			}
+ 		}
+ 	}
+@@ -1035,7 +1035,7 @@
+ 				}
+ 			#endif
+ 
+-			else /*lint !e525 Negative indentation is intended to make use of pre-processor clearer. */
++			else /*lint !e525 Negative indentation is intended to make use of pre-processor clearer. */
+ 			{
+ 				/* If the task is not in any other state, it must be in the
+ 				Ready (including pending ready) state. */
+@@ -1044,7 +1044,7 @@
+ 		}
+ 
+ 		return eReturn;
+-	} /*lint !e818 xTask cannot be a pointer to const because it is a typedef. */
++	} /*lint !e818 xTask cannot be a pointer to const because it is a typedef. */
+ 
+ #endif /* INCLUDE_eTaskGetState */
+ /*-----------------------------------------------------------*/
+@@ -1064,46 +1064,46 @@
+ 			uxReturn = pxTCB->uxPriority;
+ 		}
+ 		taskEXIT_CRITICAL();
+-
+-		return uxReturn;
+-	}
+-
+-#endif /* INCLUDE_uxTaskPriorityGet */
+-/*-----------------------------------------------------------*/
+-
+-#if ( INCLUDE_uxTaskPriorityGet == 1 )
+-
+-	UBaseType_t uxTaskPriorityGetFromISR( TaskHandle_t xTask )
+-	{
+-	TCB_t *pxTCB;
+-	UBaseType_t uxReturn, uxSavedInterruptState;
+-
+-		/* RTOS ports that support interrupt nesting have the concept of a
+-		maximum	system call (or maximum API call) interrupt priority.
+-		Interrupts that are	above the maximum system call priority are keep
+-		permanently enabled, even when the RTOS kernel is in a critical section,
+-		but cannot make any calls to FreeRTOS API functions.  If configASSERT()
+-		is defined in FreeRTOSConfig.h then
+-		portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+-		failure if a FreeRTOS API function is called from an interrupt that has
+-		been assigned a priority above the configured maximum system call
+-		priority.  Only FreeRTOS functions that end in FromISR can be called
+-		from interrupts	that have been assigned a priority at or (logically)
+-		below the maximum system call interrupt priority.  FreeRTOS maintains a
+-		separate interrupt safe API to ensure interrupt entry is as fast and as
+-		simple as possible.  More information (albeit Cortex-M specific) is
+-		provided on the following link:
+-		http://www.freertos.org/RTOS-Cortex-M3-M4.html */
+-		portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+-
+-		uxSavedInterruptState = portSET_INTERRUPT_MASK_FROM_ISR();
+-		{
+-			/* If null is passed in here then it is the priority of the calling
+-			task that is being queried. */
+-			pxTCB = prvGetTCBFromHandle( xTask );
+-			uxReturn = pxTCB->uxPriority;
+-		}
+-		portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptState );
++
++		return uxReturn;
++	}
++
++#endif /* INCLUDE_uxTaskPriorityGet */
++/*-----------------------------------------------------------*/
++
++#if ( INCLUDE_uxTaskPriorityGet == 1 )
++
++	UBaseType_t uxTaskPriorityGetFromISR( TaskHandle_t xTask )
++	{
++	TCB_t *pxTCB;
++	UBaseType_t uxReturn, uxSavedInterruptState;
++
++		/* RTOS ports that support interrupt nesting have the concept of a
++		maximum	system call (or maximum API call) interrupt priority.
++		Interrupts that are	above the maximum system call priority are keep
++		permanently enabled, even when the RTOS kernel is in a critical section,
++		but cannot make any calls to FreeRTOS API functions.  If configASSERT()
++		is defined in FreeRTOSConfig.h then
++		portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
++		failure if a FreeRTOS API function is called from an interrupt that has
++		been assigned a priority above the configured maximum system call
++		priority.  Only FreeRTOS functions that end in FromISR can be called
++		from interrupts	that have been assigned a priority at or (logically)
++		below the maximum system call interrupt priority.  FreeRTOS maintains a
++		separate interrupt safe API to ensure interrupt entry is as fast and as
++		simple as possible.  More information (albeit Cortex-M specific) is
++		provided on the following link:
++		http://www.freertos.org/RTOS-Cortex-M3-M4.html */
++		portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
++
++		uxSavedInterruptState = portSET_INTERRUPT_MASK_FROM_ISR();
++		{
++			/* If null is passed in here then it is the priority of the calling
++			task that is being queried. */
++			pxTCB = prvGetTCBFromHandle( xTask );
++			uxReturn = pxTCB->uxPriority;
++		}
++		portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptState );
+ 
+ 		return uxReturn;
+ 	}
+@@ -1348,11 +1348,11 @@
+ 				/* A task other than the currently running task was suspended,
+ 				reset the next expected unblock time in case it referred to the
+ 				task that is now in the Suspended state. */
+-				taskENTER_CRITICAL();
+-				{
+-					prvResetNextTaskUnblockTime();
+-				}
+-				taskEXIT_CRITICAL();
++				taskENTER_CRITICAL();
++				{
++					prvResetNextTaskUnblockTime();
++				}
++				taskEXIT_CRITICAL();
+ 			}
+ 			else
+ 			{
+@@ -1694,8 +1694,8 @@
+ 					( void ) uxListRemove( &( pxTCB->xGenericListItem ) );
+ 					prvAddTaskToReadyList( pxTCB );
+ 
+-					/* If the moved task has a priority higher than the current
+-					task then a yield must be performed. */
++					/* If the moved task has a priority higher than the current
++					task then a yield must be performed. */
+ 					if( pxTCB->uxPriority >= pxCurrentTCB->uxPriority )
+ 					{
+ 						xYieldPending = pdTRUE;
+@@ -1761,11 +1761,11 @@
+ TickType_t xTicks;
+ 
+ 	/* Critical section required if running on a 16 bit processor. */
+-	portTICK_TYPE_ENTER_CRITICAL();
++	portTICK_TYPE_ENTER_CRITICAL();
+ 	{
+ 		xTicks = xTickCount;
+ 	}
+-	portTICK_TYPE_EXIT_CRITICAL();
++	portTICK_TYPE_EXIT_CRITICAL();
+ 
+ 	return xTicks;
+ }
+@@ -1792,11 +1792,11 @@
+ 	link: http://www.freertos.org/RTOS-Cortex-M3-M4.html */
+ 	portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+ 
+-	uxSavedInterruptStatus = portTICK_TYPE_SET_INTERRUPT_MASK_FROM_ISR();
++	uxSavedInterruptStatus = portTICK_TYPE_SET_INTERRUPT_MASK_FROM_ISR();
+ 	{
+ 		xReturn = xTickCount;
+ 	}
+-	portTICK_TYPE_CLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
++	portTICK_TYPE_CLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+ 
+ 	return xReturn;
+ }
+@@ -1812,7 +1812,7 @@
+ 
+ #if ( INCLUDE_pcTaskGetTaskName == 1 )
+ 
+-	char *pcTaskGetTaskName( TaskHandle_t xTaskToQuery ) /*lint !e971 Unqualified char types are allowed for strings and single characters only. */
++	char *pcTaskGetTaskName( TaskHandle_t xTaskToQuery ) /*lint !e971 Unqualified char types are allowed for strings and single characters only. */
+ 	{
+ 	TCB_t *pxTCB;
+ 
+@@ -1964,7 +1964,7 @@
+ 			/* See if this tick has made a timeout expire.  Tasks are stored in
+ 			the	queue in the order of their wake time - meaning once one task
+ 			has been found whose block time has not expired there is no need to
+-			look any further down the list. */
++			look any further down the list. */
+ 			if( xConstTickCount >= xNextTaskUnblockTime )
+ 			{
+ 				for( ;; )
+@@ -2235,12 +2235,12 @@
+ 		}
+ 		#endif /* configGENERATE_RUN_TIME_STATS */
+ 
+-		/* Check for stack overflow, if configured. */
++		/* Check for stack overflow, if configured. */
+ 		taskFIRST_CHECK_FOR_STACK_OVERFLOW();
+ 		taskSECOND_CHECK_FOR_STACK_OVERFLOW();
+ 
+-		/* Select a new task to run using either the generic C or port
+-		optimised asm code. */
++		/* Select a new task to run using either the generic C or port
++		optimised asm code. */
+ 		taskSELECT_HIGHEST_PRIORITY_TASK();
+ 		traceTASK_SWITCHED_IN();
+ 
+@@ -2475,20 +2475,20 @@
+ 		xReturn = pdFALSE;
+ 	}
+ 
+-	#if( configUSE_TICKLESS_IDLE == 1 )
+-	{
+-		/* If a task is blocked on a kernel object then xNextTaskUnblockTime
+-		might be set to the blocked task's time out time.  If the task is
+-		unblocked for a reason other than a timeout xNextTaskUnblockTime is
+-		normally left unchanged, because it is automatically get reset to a new
+-		value when the tick count equals xNextTaskUnblockTime.  However if
+-		tickless idling is used it might be more important to enter sleep mode
+-		at the earliest possible time - so reset xNextTaskUnblockTime here to
+-		ensure it is updated at the earliest possible time. */
+-		prvResetNextTaskUnblockTime();
+-	}
+-	#endif
+-
++	#if( configUSE_TICKLESS_IDLE != 0 )
++	{
++		/* If a task is blocked on a kernel object then xNextTaskUnblockTime
++		might be set to the blocked task's time out time.  If the task is
++		unblocked for a reason other than a timeout xNextTaskUnblockTime is
++		normally left unchanged, because it is automatically get reset to a new
++		value when the tick count equals xNextTaskUnblockTime.  However if
++		tickless idling is used it might be more important to enter sleep mode
++		at the earliest possible time - so reset xNextTaskUnblockTime here to
++		ensure it is updated at the earliest possible time. */
++		prvResetNextTaskUnblockTime();
++	}
++	#endif
++
+ 	return xReturn;
+ }
+ /*-----------------------------------------------------------*/
+@@ -2733,7 +2733,9 @@
+ 					if( xExpectedIdleTime >= configEXPECTED_IDLE_TIME_BEFORE_SLEEP )
+ 					{
+ 						traceLOW_POWER_IDLE_BEGIN();
++
+ 						portSUPPRESS_TICKS_AND_SLEEP( xExpectedIdleTime );
++
+ 						traceLOW_POWER_IDLE_END();
+ 					}
+ 					else
+@@ -2838,7 +2840,7 @@
+ 	#if ( configUSE_MUTEXES == 1 )
+ 	{
+ 		pxTCB->uxBasePriority = uxPriority;
+-		pxTCB->uxMutexesHeld = 0;
++		pxTCB->uxMutexesHeld = 0;
+ 	}
+ 	#endif /* configUSE_MUTEXES */
+ 
+@@ -2882,13 +2884,13 @@
+ 	}
+ 	#endif /* portUSING_MPU_WRAPPERS */
+ 
+-	#if ( configUSE_TASK_NOTIFICATIONS == 1 )
+-	{
+-		pxTCB->ulNotifiedValue = 0;
+-		pxTCB->eNotifyState = eNotWaitingNotification;
+-	}
+-	#endif
+-
++	#if ( configUSE_TASK_NOTIFICATIONS == 1 )
++	{
++		pxTCB->ulNotifiedValue = 0;
++		pxTCB->eNotifyState = eNotWaitingNotification;
++	}
++	#endif
++
+ 	#if ( configUSE_NEWLIB_REENTRANT == 1 )
+ 	{
+ 		/* Initialise this task's Newlib reent structure. */
+@@ -3020,71 +3022,71 @@
+ {
+ TCB_t *pxNewTCB;
+ 
+-	/* If the stack grows down then allocate the stack then the TCB so the stack
+-	does not grow into the TCB.  Likewise if the stack grows up then allocate
+-	the TCB then the stack. */
+-	#if( portSTACK_GROWTH > 0 )
+-	{
+-		/* Allocate space for the TCB.  Where the memory comes from depends on
+-		the implementation of the port malloc function. */
+-		pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
+-
+-		if( pxNewTCB != NULL )
+-		{
+-			/* Allocate space for the stack used by the task being created.
+-			The base of the stack memory stored in the TCB so the task can
+-			be deleted later if required. */
+-			pxNewTCB->pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+-
+-			if( pxNewTCB->pxStack == NULL )
+-			{
+-				/* Could not allocate the stack.  Delete the allocated TCB. */
+-				vPortFree( pxNewTCB );
+-				pxNewTCB = NULL;
+-			}
+-		}
+-	}
+-	#else /* portSTACK_GROWTH */
+-	{
+-	StackType_t *pxStack;
+-
+-		/* Allocate space for the stack used by the task being created. */
+-		pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+-
+-		if( pxStack != NULL )
+-		{
+-			/* Allocate space for the TCB.  Where the memory comes from depends
+-			on the implementation of the port malloc function. */
+-			pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
+-
+-			if( pxNewTCB != NULL )
+-			{
+-				/* Store the stack location in the TCB. */
+-				pxNewTCB->pxStack = pxStack;
+-			}
+-			else
+-			{
+-				/* The stack cannot be used as the TCB was not created.  Free it
+-				again. */
+-				vPortFree( pxStack );
+-			}
+-		}
+-		else
+-		{
+-			pxNewTCB = NULL;
+-		}
+-	}
+-	#endif /* portSTACK_GROWTH */
+-
+-	if( pxNewTCB != NULL )
+-	{
+-		/* Avoid dependency on memset() if it is not required. */
+-		#if( ( configCHECK_FOR_STACK_OVERFLOW > 1 ) || ( configUSE_TRACE_FACILITY == 1 ) || ( INCLUDE_uxTaskGetStackHighWaterMark == 1 ) )
+-		{
+-			/* Just to help debugging. */
+-			( void ) memset( pxNewTCB->pxStack, ( int ) tskSTACK_FILL_BYTE, ( size_t ) usStackDepth * sizeof( StackType_t ) );
+-		}
+-		#endif /* ( ( configCHECK_FOR_STACK_OVERFLOW > 1 ) || ( ( configUSE_TRACE_FACILITY == 1 ) || ( INCLUDE_uxTaskGetStackHighWaterMark == 1 ) ) ) */
++	/* If the stack grows down then allocate the stack then the TCB so the stack
++	does not grow into the TCB.  Likewise if the stack grows up then allocate
++	the TCB then the stack. */
++	#if( portSTACK_GROWTH > 0 )
++	{
++		/* Allocate space for the TCB.  Where the memory comes from depends on
++		the implementation of the port malloc function. */
++		pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
++
++		if( pxNewTCB != NULL )
++		{
++			/* Allocate space for the stack used by the task being created.
++			The base of the stack memory stored in the TCB so the task can
++			be deleted later if required. */
++			pxNewTCB->pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
++
++			if( pxNewTCB->pxStack == NULL )
++			{
++				/* Could not allocate the stack.  Delete the allocated TCB. */
++				vPortFree( pxNewTCB );
++				pxNewTCB = NULL;
++			}
++		}
++	}
++	#else /* portSTACK_GROWTH */
++	{
++	StackType_t *pxStack;
++
++		/* Allocate space for the stack used by the task being created. */
++		pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
++
++		if( pxStack != NULL )
++		{
++			/* Allocate space for the TCB.  Where the memory comes from depends
++			on the implementation of the port malloc function. */
++			pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
++
++			if( pxNewTCB != NULL )
++			{
++				/* Store the stack location in the TCB. */
++				pxNewTCB->pxStack = pxStack;
++			}
++			else
++			{
++				/* The stack cannot be used as the TCB was not created.  Free it
++				again. */
++				vPortFree( pxStack );
++			}
++		}
++		else
++		{
++			pxNewTCB = NULL;
++		}
++	}
++	#endif /* portSTACK_GROWTH */
++
++	if( pxNewTCB != NULL )
++	{
++		/* Avoid dependency on memset() if it is not required. */
++		#if( ( configCHECK_FOR_STACK_OVERFLOW > 1 ) || ( configUSE_TRACE_FACILITY == 1 ) || ( INCLUDE_uxTaskGetStackHighWaterMark == 1 ) )
++		{
++			/* Just to help debugging. */
++			( void ) memset( pxNewTCB->pxStack, ( int ) tskSTACK_FILL_BYTE, ( size_t ) usStackDepth * sizeof( StackType_t ) );
++		}
++		#endif /* ( ( configCHECK_FOR_STACK_OVERFLOW > 1 ) || ( ( configUSE_TRACE_FACILITY == 1 ) || ( INCLUDE_uxTaskGetStackHighWaterMark == 1 ) ) ) */
+ 	}
+ 
+ 	return pxNewTCB;
+@@ -3182,13 +3184,13 @@
+ 	{
+ 	uint32_t ulCount = 0U;
+ 
+-		while( *pucStackByte == ( uint8_t ) tskSTACK_FILL_BYTE )
++		while( *pucStackByte == ( uint8_t ) tskSTACK_FILL_BYTE )
+ 		{
+ 			pucStackByte -= portSTACK_GROWTH;
+ 			ulCount++;
+ 		}
+ 
+-		ulCount /= ( uint32_t ) sizeof( StackType_t ); /*lint !e961 Casting is not redundant on smaller architectures. */
++		ulCount /= ( uint32_t ) sizeof( StackType_t ); /*lint !e961 Casting is not redundant on smaller architectures. */
+ 
+ 		return ( uint16_t ) ulCount;
+ 	}
+@@ -3233,29 +3235,29 @@
+ 		want to allocate and clean RAM statically. */
+ 		portCLEAN_UP_TCB( pxTCB );
+ 
+-		/* Free up the memory allocated by the scheduler for the task.  It is up
+-		to the task to free any memory allocated at the application level. */
+-		#if ( configUSE_NEWLIB_REENTRANT == 1 )
+-		{
+-			_reclaim_reent( &( pxTCB->xNewLib_reent ) );
+-		}
+-		#endif /* configUSE_NEWLIB_REENTRANT */
+-
+-		#if( portUSING_MPU_WRAPPERS == 1 )
+-		{
+-			/* Only free the stack if it was allocated dynamically in the first
+-			place. */
+-			if( pxTCB->xUsingStaticallyAllocatedStack == pdFALSE )
+-			{
+-				vPortFreeAligned( pxTCB->pxStack );
+-			}
+-		}
+-		#else
+-		{
+-			vPortFreeAligned( pxTCB->pxStack );
+-		}
+-		#endif
+-
++		/* Free up the memory allocated by the scheduler for the task.  It is up
++		to the task to free any memory allocated at the application level. */
++		#if ( configUSE_NEWLIB_REENTRANT == 1 )
++		{
++			_reclaim_reent( &( pxTCB->xNewLib_reent ) );
++		}
++		#endif /* configUSE_NEWLIB_REENTRANT */
++
++		#if( portUSING_MPU_WRAPPERS == 1 )
++		{
++			/* Only free the stack if it was allocated dynamically in the first
++			place. */
++			if( pxTCB->xUsingStaticallyAllocatedStack == pdFALSE )
++			{
++				vPortFreeAligned( pxTCB->pxStack );
++			}
++		}
++		#else
++		{
++			vPortFreeAligned( pxTCB->pxStack );
++		}
++		#endif
++
+ 		vPortFree( pxTCB );
+ 	}
+ 
+@@ -3397,55 +3399,55 @@
+ 
+ #if ( configUSE_MUTEXES == 1 )
+ 
+-	BaseType_t xTaskPriorityDisinherit( TaskHandle_t const pxMutexHolder )
++	BaseType_t xTaskPriorityDisinherit( TaskHandle_t const pxMutexHolder )
+ 	{
+ 	TCB_t * const pxTCB = ( TCB_t * ) pxMutexHolder;
+-	BaseType_t xReturn = pdFALSE;
++	BaseType_t xReturn = pdFALSE;
+ 
+ 		if( pxMutexHolder != NULL )
+ 		{
+-			configASSERT( pxTCB->uxMutexesHeld );
+-			( pxTCB->uxMutexesHeld )--;
+-
++			configASSERT( pxTCB->uxMutexesHeld );
++			( pxTCB->uxMutexesHeld )--;
++
+ 			if( pxTCB->uxPriority != pxTCB->uxBasePriority )
+ 			{
+-				/* Only disinherit if no other mutexes are held. */
+-				if( pxTCB->uxMutexesHeld == ( UBaseType_t ) 0 )
++				/* Only disinherit if no other mutexes are held. */
++				if( pxTCB->uxMutexesHeld == ( UBaseType_t ) 0 )
+ 				{
+-					/* A task can only have an inhertied priority if it holds
+-					the mutex.  If the mutex is held by a task then it cannot be
+-					given from an interrupt, and if a mutex is given by the
+-					holding	task then it must be the running state task.  Remove
+-					the	holding task from the ready	list. */
+-					if( uxListRemove( &( pxTCB->xGenericListItem ) ) == ( UBaseType_t ) 0 )
+-					{
+-						taskRESET_READY_PRIORITY( pxTCB->uxPriority );
+-					}
+-					else
+-					{
+-						mtCOVERAGE_TEST_MARKER();
+-					}
+-
+-					/* Disinherit the priority before adding the task into the
+-					new	ready list. */
+-					traceTASK_PRIORITY_DISINHERIT( pxTCB, pxTCB->uxBasePriority );
+-					pxTCB->uxPriority = pxTCB->uxBasePriority;
+-
+-					/* Reset the event list item value.  It cannot be in use for
+-					any other purpose if this task is running, and it must be
+-					running to give back the mutex. */
++					/* A task can only have an inhertied priority if it holds
++					the mutex.  If the mutex is held by a task then it cannot be
++					given from an interrupt, and if a mutex is given by the
++					holding	task then it must be the running state task.  Remove
++					the	holding task from the ready	list. */
++					if( uxListRemove( &( pxTCB->xGenericListItem ) ) == ( UBaseType_t ) 0 )
++					{
++						taskRESET_READY_PRIORITY( pxTCB->uxPriority );
++					}
++					else
++					{
++						mtCOVERAGE_TEST_MARKER();
++					}
++
++					/* Disinherit the priority before adding the task into the
++					new	ready list. */
++					traceTASK_PRIORITY_DISINHERIT( pxTCB, pxTCB->uxBasePriority );
++					pxTCB->uxPriority = pxTCB->uxBasePriority;
++
++					/* Reset the event list item value.  It cannot be in use for
++					any other purpose if this task is running, and it must be
++					running to give back the mutex. */
+ 					listSET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ), ( TickType_t ) configMAX_PRIORITIES - ( TickType_t ) pxTCB->uxPriority ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+-					prvAddTaskToReadyList( pxTCB );
+-
+-					/* Return true to indicate that a context switch is required.
+-					This is only actually required in the corner case whereby
+-					multiple mutexes were held and the mutexes were given back
+-					in an order different to that in which they were taken.
+-					If a context switch did not occur when the first mutex was
+-					returned, even if a task was waiting on it, then a context
+-					switch should occur when the last mutex is returned whether
+-					a task is waiting on it or not. */
+-					xReturn = pdTRUE;
++					prvAddTaskToReadyList( pxTCB );
++
++					/* Return true to indicate that a context switch is required.
++					This is only actually required in the corner case whereby
++					multiple mutexes were held and the mutexes were given back
++					in an order different to that in which they were taken.
++					If a context switch did not occur when the first mutex was
++					returned, even if a task was waiting on it, then a context
++					switch should occur when the last mutex is returned whether
++					a task is waiting on it or not. */
++					xReturn = pdTRUE;
+ 				}
+ 				else
+ 				{
+@@ -3461,8 +3463,8 @@
+ 		{
+ 			mtCOVERAGE_TEST_MARKER();
+ 		}
+-
+-		return xReturn;
++
++		return xReturn;
+ 	}
+ 
+ #endif /* configUSE_MUTEXES */
+@@ -3477,18 +3479,18 @@
+ 		if( xSchedulerRunning != pdFALSE )
+ 		{
+ 			( pxCurrentTCB->uxCriticalNesting )++;
+-
+-			/* This is not the interrupt safe version of the enter critical
+-			function so	assert() if it is being called from an interrupt
+-			context.  Only API functions that end in "FromISR" can be used in an
+-			interrupt.  Only assert if the critical nesting count is 1 to
+-			protect against recursive calls if the assert function also uses a
+-			critical section. */
+-			if( pxCurrentTCB->uxCriticalNesting == 1 )
+-			{
+-				portASSERT_IF_IN_ISR();
+-			}
+-
++
++			/* This is not the interrupt safe version of the enter critical
++			function so	assert() if it is being called from an interrupt
++			context.  Only API functions that end in "FromISR" can be used in an
++			interrupt.  Only assert if the critical nesting count is 1 to
++			protect against recursive calls if the assert function also uses a
++			critical section. */
++			if( pxCurrentTCB->uxCriticalNesting == 1 )
++			{
++				portASSERT_IF_IN_ISR();
++			}
++
+ 		}
+ 		else
+ 		{
+@@ -3532,33 +3534,33 @@
+ #endif /* portCRITICAL_NESTING_IN_TCB */
+ /*-----------------------------------------------------------*/
+ 
+-#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
+-
+-	static char *prvWriteNameToBuffer( char *pcBuffer, const char *pcTaskName )
+-	{
+-	BaseType_t x;
+-
+-		/* Start by copying the entire string. */
+-		strcpy( pcBuffer, pcTaskName );
+-
+-		/* Pad the end of the string with spaces to ensure columns line up when
+-		printed out. */
+-		for( x = strlen( pcBuffer ); x < ( configMAX_TASK_NAME_LEN - 1 ); x++ )
+-		{
+-			pcBuffer[ x ] = ' ';
+-		}
+-
+-		/* Terminate. */
+-		pcBuffer[ x ] = 0x00;
+-
+-		/* Return the new end of string. */
+-		return &( pcBuffer[ x ] );
+-	}
+-
+-#endif /* ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) */
+-/*-----------------------------------------------------------*/
+-
+-#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
++#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
++
++	static char *prvWriteNameToBuffer( char *pcBuffer, const char *pcTaskName )
++	{
++	BaseType_t x;
++
++		/* Start by copying the entire string. */
++		strcpy( pcBuffer, pcTaskName );
++
++		/* Pad the end of the string with spaces to ensure columns line up when
++		printed out. */
++		for( x = strlen( pcBuffer ); x < ( configMAX_TASK_NAME_LEN - 1 ); x++ )
++		{
++			pcBuffer[ x ] = ' ';
++		}
++
++		/* Terminate. */
++		pcBuffer[ x ] = 0x00;
++
++		/* Return the new end of string. */
++		return &( pcBuffer[ x ] );
++	}
++
++#endif /* ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) */
++/*-----------------------------------------------------------*/
++
++#if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
+ 
+ 	void vTaskList( char * pcWriteBuffer )
+ 	{
+@@ -3611,30 +3613,30 @@
+ 			{
+ 				switch( pxTaskStatusArray[ x ].eCurrentState )
+ 				{
+-					case eReady:		cStatus = tskREADY_CHAR;
+-										break;
+-
+-					case eBlocked:		cStatus = tskBLOCKED_CHAR;
+-										break;
+-
+-					case eSuspended:	cStatus = tskSUSPENDED_CHAR;
+-										break;
++					case eReady:		cStatus = tskREADY_CHAR;
++										break;
+ 
+-					case eDeleted:		cStatus = tskDELETED_CHAR;
+-										break;
++					case eBlocked:		cStatus = tskBLOCKED_CHAR;
++										break;
+ 
+-					default:			/* Should not get here, but it is included
+-										to prevent static checking errors. */
+-										cStatus = 0x00;
+-										break;
+-				}
+-
+-				/* Write the task name to the string, padding with spaces so it
+-				can be printed in tabular form more easily. */
+-				pcWriteBuffer = prvWriteNameToBuffer( pcWriteBuffer, pxTaskStatusArray[ x ].pcTaskName );
++					case eSuspended:	cStatus = tskSUSPENDED_CHAR;
++										break;
+ 
+-				/* Write the rest of the string. */
+-				sprintf( pcWriteBuffer, "\t%c\t%u\t%u\t%u\r\n", cStatus, ( unsigned int ) pxTaskStatusArray[ x ].uxCurrentPriority, ( unsigned int ) pxTaskStatusArray[ x ].usStackHighWaterMark, ( unsigned int ) pxTaskStatusArray[ x ].xTaskNumber );
++					case eDeleted:		cStatus = tskDELETED_CHAR;
++										break;
++
++					default:			/* Should not get here, but it is included
++										to prevent static checking errors. */
++										cStatus = 0x00;
++										break;
++				}
++
++				/* Write the task name to the string, padding with spaces so it
++				can be printed in tabular form more easily. */
++				pcWriteBuffer = prvWriteNameToBuffer( pcWriteBuffer, pxTaskStatusArray[ x ].pcTaskName );
++
++				/* Write the rest of the string. */
++				sprintf( pcWriteBuffer, "\t%c\t%u\t%u\t%u\r\n", cStatus, ( unsigned int ) pxTaskStatusArray[ x ].uxCurrentPriority, ( unsigned int ) pxTaskStatusArray[ x ].usStackHighWaterMark, ( unsigned int ) pxTaskStatusArray[ x ].xTaskNumber );
+ 				pcWriteBuffer += strlen( pcWriteBuffer );
+ 			}
+ 
+@@ -3647,10 +3649,10 @@
+ 		}
+ 	}
+ 
+-#endif /* ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) ) */
++#endif /* ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) ) */
+ /*----------------------------------------------------------*/
+ 
+-#if ( ( configGENERATE_RUN_TIME_STATS == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
++#if ( ( configGENERATE_RUN_TIME_STATS == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) )
+ 
+ 	void vTaskGetRunTimeStats( char *pcWriteBuffer )
+ 	{
+@@ -3717,23 +3719,23 @@
+ 					This will always be rounded down to the nearest integer.
+ 					ulTotalRunTimeDiv100 has already been divided by 100. */
+ 					ulStatsAsPercentage = pxTaskStatusArray[ x ].ulRunTimeCounter / ulTotalTime;
+-
+-					/* Write the task name to the string, padding with
+-					spaces so it can be printed in tabular form more
+-					easily. */
+-					pcWriteBuffer = prvWriteNameToBuffer( pcWriteBuffer, pxTaskStatusArray[ x ].pcTaskName );
++
++					/* Write the task name to the string, padding with
++					spaces so it can be printed in tabular form more
++					easily. */
++					pcWriteBuffer = prvWriteNameToBuffer( pcWriteBuffer, pxTaskStatusArray[ x ].pcTaskName );
+ 
+ 					if( ulStatsAsPercentage > 0UL )
+ 					{
+ 						#ifdef portLU_PRINTF_SPECIFIER_REQUIRED
+ 						{
+-							sprintf( pcWriteBuffer, "\t%lu\t\t%lu%%\r\n", pxTaskStatusArray[ x ].ulRunTimeCounter, ulStatsAsPercentage );
++							sprintf( pcWriteBuffer, "\t%lu\t\t%lu%%\r\n", pxTaskStatusArray[ x ].ulRunTimeCounter, ulStatsAsPercentage );
+ 						}
+ 						#else
+ 						{
+ 							/* sizeof( int ) == sizeof( long ) so a smaller
+ 							printf() library can be used. */
+-							sprintf( pcWriteBuffer, "\t%u\t\t%u%%\r\n", ( unsigned int ) pxTaskStatusArray[ x ].ulRunTimeCounter, ( unsigned int ) ulStatsAsPercentage );
++							sprintf( pcWriteBuffer, "\t%u\t\t%u%%\r\n", ( unsigned int ) pxTaskStatusArray[ x ].ulRunTimeCounter, ( unsigned int ) ulStatsAsPercentage );
+ 						}
+ 						#endif
+ 					}
+@@ -3743,13 +3745,13 @@
+ 						consumed less than 1% of the total run time. */
+ 						#ifdef portLU_PRINTF_SPECIFIER_REQUIRED
+ 						{
+-							sprintf( pcWriteBuffer, "\t%lu\t\t<1%%\r\n", pxTaskStatusArray[ x ].ulRunTimeCounter );
++							sprintf( pcWriteBuffer, "\t%lu\t\t<1%%\r\n", pxTaskStatusArray[ x ].ulRunTimeCounter );
+ 						}
+ 						#else
+ 						{
+ 							/* sizeof( int ) == sizeof( long ) so a smaller
+ 							printf() library can be used. */
+-							sprintf( pcWriteBuffer, "\t%u\t\t<1%%\r\n", ( unsigned int ) pxTaskStatusArray[ x ].ulRunTimeCounter );
++							sprintf( pcWriteBuffer, "\t%u\t\t<1%%\r\n", ( unsigned int ) pxTaskStatusArray[ x ].ulRunTimeCounter );
+ 						}
+ 						#endif
+ 					}
+@@ -3771,7 +3773,7 @@
+ 		}
+ 	}
+ 
+-#endif /* ( ( configGENERATE_RUN_TIME_STATS == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) ) */
++#endif /* ( ( configGENERATE_RUN_TIME_STATS == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS > 0 ) ) */
+ /*-----------------------------------------------------------*/
+ 
+ TickType_t uxTaskResetEventItemValue( void )
+@@ -3786,533 +3788,581 @@
+ 
+ 	return uxReturn;
+ }
++/*-----------------------------------------------------------*/
++
++#if ( configUSE_MUTEXES == 1 )
++
++	void *pvTaskIncrementMutexHeldCount( void )
++	{
++		/* If xSemaphoreCreateMutex() is called before any tasks have been created
++		then pxCurrentTCB will be NULL. */
++		if( pxCurrentTCB != NULL )
++		{
++			( pxCurrentTCB->uxMutexesHeld )++;
++		}
++
++		return pxCurrentTCB;
++	}
++
++#endif /* configUSE_MUTEXES */
++/*-----------------------------------------------------------*/
++
++#if( configUSE_TASK_NOTIFICATIONS == 1 )
++
++	uint32_t ulTaskNotifyTake( BaseType_t xClearCountOnExit, TickType_t xTicksToWait )
++	{
++	TickType_t xTimeToWake;
++	uint32_t ulReturn;
++
++		taskENTER_CRITICAL();
++		{
++			/* Only block if the notification count is not already non-zero. */
++			if( pxCurrentTCB->ulNotifiedValue == 0UL )
++			{
++				/* Mark this task as waiting for a notification. */
++				pxCurrentTCB->eNotifyState = eWaitingNotification;
++
++				if( xTicksToWait > ( TickType_t ) 0 )
++				{
++					/* The task is going to block.  First it must be removed
++					from the ready list. */
++					if( uxListRemove( &( pxCurrentTCB->xGenericListItem ) ) == ( UBaseType_t ) 0 )
++					{
++						/* The current task must be in a ready list, so there is
++						no need to check, and the port reset macro can be called
++						directly. */
++						portRESET_READY_PRIORITY( pxCurrentTCB->uxPriority, uxTopReadyPriority );
++					}
++					else
++					{
++						mtCOVERAGE_TEST_MARKER();
++					}
++
++					#if ( INCLUDE_vTaskSuspend == 1 )
++					{
++						if( xTicksToWait == portMAX_DELAY )
++						{
++							/* Add the task to the suspended task list instead
++							of a delayed task list to ensure the task is not
++							woken by a timing event.  It will block
++							indefinitely. */
++							vListInsertEnd( &xSuspendedTaskList, &( pxCurrentTCB->xGenericListItem ) );
++						}
++						else
++						{
++							/* Calculate the time at which the task should be
++							woken if no notification events occur.  This may
++							overflow but this doesn't matter, the scheduler will
++							handle it. */
++							xTimeToWake = xTickCount + xTicksToWait;
++							prvAddCurrentTaskToDelayedList( xTimeToWake );
++						}
++					}
++					#else /* INCLUDE_vTaskSuspend */
++					{
++							/* Calculate the time at which the task should be
++							woken if the event does not occur.  This may
++							overflow but this doesn't matter, the scheduler will
++							handle it. */
++							xTimeToWake = xTickCount + xTicksToWait;
++							prvAddCurrentTaskToDelayedList( xTimeToWake );
++					}
++					#endif /* INCLUDE_vTaskSuspend */
++
++					/* All ports are written to allow a yield in a critical
++					section (some will yield immediately, others wait until the
++					critical section exits) - but it is not something that
++					application code should ever do. */
++					portYIELD_WITHIN_API();
++				}
++				else
++				{
++					mtCOVERAGE_TEST_MARKER();
++				}
++			}
++			else
++			{
++				mtCOVERAGE_TEST_MARKER();
++			}
++		}
++		taskEXIT_CRITICAL();
++
++		taskENTER_CRITICAL();
++		{
++			ulReturn = pxCurrentTCB->ulNotifiedValue;
++
++			if( ulReturn != 0UL )
++			{
++				if( xClearCountOnExit != pdFALSE )
++				{
++					pxCurrentTCB->ulNotifiedValue = 0UL;
++				}
++				else
++				{
++					( pxCurrentTCB->ulNotifiedValue )--;
++				}
++			}
++			else
++			{
++				mtCOVERAGE_TEST_MARKER();
++			}
++
++			pxCurrentTCB->eNotifyState = eNotWaitingNotification;
++		}
++		taskEXIT_CRITICAL();
++
++		return ulReturn;
++	}
++
++#endif /* configUSE_TASK_NOTIFICATIONS */
++/*-----------------------------------------------------------*/
++
++#if( configUSE_TASK_NOTIFICATIONS == 1 )
++
++	BaseType_t xTaskNotifyWait( uint32_t ulBitsToClearOnEntry, uint32_t ulBitsToClearOnExit, uint32_t *pulNotificationValue, TickType_t xTicksToWait )
++	{
++	TickType_t xTimeToWake;
++	BaseType_t xReturn;
++
++		taskENTER_CRITICAL();
++		{
++			/* Only block if a notification is not already pending. */
++			if( pxCurrentTCB->eNotifyState != eNotified )
++			{
++				/* Clear bits in the task's notification value as bits may get
++				set	by the notifying task or interrupt.  This can be used to
++				clear the value to zero. */
++				pxCurrentTCB->ulNotifiedValue &= ~ulBitsToClearOnEntry;
++
++				/* Mark this task as waiting for a notification. */
++				pxCurrentTCB->eNotifyState = eWaitingNotification;
++
++				if( xTicksToWait > ( TickType_t ) 0 )
++				{
++					/* The task is going to block.  First it must be removed
++					from the	ready list. */
++					if( uxListRemove( &( pxCurrentTCB->xGenericListItem ) ) == ( UBaseType_t ) 0 )
++					{
++						/* The current task must be in a ready list, so there is
++						no need to check, and the port reset macro can be called
++						directly. */
++						portRESET_READY_PRIORITY( pxCurrentTCB->uxPriority, uxTopReadyPriority );
++					}
++					else
++					{
++						mtCOVERAGE_TEST_MARKER();
++					}
++
++					#if ( INCLUDE_vTaskSuspend == 1 )
++					{
++						if( xTicksToWait == portMAX_DELAY )
++						{
++							/* Add the task to the suspended task list instead
++							of a delayed task list to ensure the task is not
++							woken by a timing event.  It will block
++							indefinitely. */
++							vListInsertEnd( &xSuspendedTaskList, &( pxCurrentTCB->xGenericListItem ) );
++						}
++						else
++						{
++							/* Calculate the time at which the task should be
++							woken if no notification events occur.  This may
++							overflow but this doesn't matter, the scheduler will
++							handle it. */
++							xTimeToWake = xTickCount + xTicksToWait;
++							prvAddCurrentTaskToDelayedList( xTimeToWake );
++						}
++					}
++					#else /* INCLUDE_vTaskSuspend */
++					{
++							/* Calculate the time at which the task should be
++							woken if the event does not occur.  This may
++							overflow but this doesn't matter, the scheduler will
++							handle it. */
++							xTimeToWake = xTickCount + xTicksToWait;
++							prvAddCurrentTaskToDelayedList( xTimeToWake );
++					}
++					#endif /* INCLUDE_vTaskSuspend */
++
++					/* All ports are written to allow a yield in a critical
++					section (some will yield immediately, others wait until the
++					critical section exits) - but it is not something that
++					application code should ever do. */
++					portYIELD_WITHIN_API();
++				}
++				else
++				{
++					mtCOVERAGE_TEST_MARKER();
++				}
++			}
++			else
++			{
++				mtCOVERAGE_TEST_MARKER();
++			}
++		}
++		taskEXIT_CRITICAL();
++
++		taskENTER_CRITICAL();
++		{
++			if( pulNotificationValue != NULL )
++			{
++				/* Output the current notification value, which may or may not
++				have changed. */
++				*pulNotificationValue = pxCurrentTCB->ulNotifiedValue;
++			}
++
++			/* If eNotifyValue is set then either the task never entered the
++			blocked state (because a notification was already pending) or the
++			task unblocked because of a notification.  Otherwise the task
++			unblocked because of a timeout. */
++			if( pxCurrentTCB->eNotifyState == eWaitingNotification )
++			{
++				/* A notification was not received. */
++				xReturn = pdFALSE;
++			}
++			else
++			{
++				/* A notification was already pending or a notification was
++				received while the task was waiting. */
++				pxCurrentTCB->ulNotifiedValue &= ~ulBitsToClearOnExit;
++				xReturn = pdTRUE;
++			}
++
++			pxCurrentTCB->eNotifyState = eNotWaitingNotification;
++		}
++		taskEXIT_CRITICAL();
++
++		return xReturn;
++	}
++
++#endif /* configUSE_TASK_NOTIFICATIONS */
++/*-----------------------------------------------------------*/
++
++#if( configUSE_TASK_NOTIFICATIONS == 1 )
++
++	BaseType_t xTaskNotify( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction )
++	{
++	TCB_t * pxTCB;
++	eNotifyValue eOriginalNotifyState;
++	BaseType_t xReturn = pdPASS;
++
++		configASSERT( xTaskToNotify );
++		pxTCB = ( TCB_t * ) xTaskToNotify;
++
++		taskENTER_CRITICAL();
++		{
++			eOriginalNotifyState = pxTCB->eNotifyState;
++
++			pxTCB->eNotifyState = eNotified;
++
++			switch( eAction )
++			{
++				case eSetBits	:
++					pxTCB->ulNotifiedValue |= ulValue;
++					break;
++
++				case eIncrement	:
++					( pxTCB->ulNotifiedValue )++;
++					break;
++
++				case eSetValueWithOverwrite	:
++					pxTCB->ulNotifiedValue = ulValue;
++					break;
++
++				case eSetValueWithoutOverwrite :
++					if( eOriginalNotifyState != eNotified )
++					{
++						pxTCB->ulNotifiedValue = ulValue;
++					}
++					else
++					{
++						/* The value could not be written to the task. */
++						xReturn = pdFAIL;
++					}
++					break;
++
++				case eNoAction:
++					/* The task is being notified without its notify value being
++					updated. */
++					break;
++			}
++
++
++			/* If the task is in the blocked state specifically to wait for a
++			notification then unblock it now. */
++			if( eOriginalNotifyState == eWaitingNotification )
++			{
++				( void ) uxListRemove( &( pxTCB->xGenericListItem ) );
++				prvAddTaskToReadyList( pxTCB );
++
++				/* The task should not have been on an event list. */
++				configASSERT( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL );
++
++				if( pxTCB->uxPriority > pxCurrentTCB->uxPriority )
++				{
++					/* The notified task has a priority above the currently
++					executing task so a yield is required. */
++					portYIELD_WITHIN_API();
++				}
++				else
++				{
++					mtCOVERAGE_TEST_MARKER();
++				}
++			}
++			else
++			{
++				mtCOVERAGE_TEST_MARKER();
++			}
++		}
++		taskEXIT_CRITICAL();
++
++		return xReturn;
++	}
++
++#endif /* configUSE_TASK_NOTIFICATIONS */
++/*-----------------------------------------------------------*/
++
++#if( configUSE_TASK_NOTIFICATIONS == 1 )
++
++	BaseType_t xTaskNotifyFromISR( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction, BaseType_t *pxHigherPriorityTaskWoken )
++	{
++	TCB_t * pxTCB;
++	eNotifyValue eOriginalNotifyState;
++	BaseType_t xReturn = pdPASS;
++	UBaseType_t uxSavedInterruptStatus;
++
++		configASSERT( xTaskToNotify );
++
++		/* RTOS ports that support interrupt nesting have the concept of a
++		maximum	system call (or maximum API call) interrupt priority.
++		Interrupts that are	above the maximum system call priority are keep
++		permanently enabled, even when the RTOS kernel is in a critical section,
++		but cannot make any calls to FreeRTOS API functions.  If configASSERT()
++		is defined in FreeRTOSConfig.h then
++		portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
++		failure if a FreeRTOS API function is called from an interrupt that has
++		been assigned a priority above the configured maximum system call
++		priority.  Only FreeRTOS functions that end in FromISR can be called
++		from interrupts	that have been assigned a priority at or (logically)
++		below the maximum system call interrupt priority.  FreeRTOS maintains a
++		separate interrupt safe API to ensure interrupt entry is as fast and as
++		simple as possible.  More information (albeit Cortex-M specific) is
++		provided on the following link:
++		http://www.freertos.org/RTOS-Cortex-M3-M4.html */
++		portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
++
++		pxTCB = ( TCB_t * ) xTaskToNotify;
++
++		uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
++		{
++			eOriginalNotifyState = pxTCB->eNotifyState;
++
++			pxTCB->eNotifyState = eNotified;
++
++			switch( eAction )
++			{
++				case eSetBits	:
++					pxTCB->ulNotifiedValue |= ulValue;
++					break;
++
++				case eIncrement	:
++					( pxTCB->ulNotifiedValue )++;
++					break;
++
++				case eSetValueWithOverwrite	:
++					pxTCB->ulNotifiedValue = ulValue;
++					break;
++
++				case eSetValueWithoutOverwrite :
++					if( eOriginalNotifyState != eNotified )
++					{
++						pxTCB->ulNotifiedValue = ulValue;
++					}
++					else
++					{
++						/* The value could not be written to the task. */
++						xReturn = pdFAIL;
++					}
++					break;
++
++				case eNoAction :
++					/* The task is being notified without its notify value being
++					updated. */
++					break;
++			}
++
++
++			/* If the task is in the blocked state specifically to wait for a
++			notification then unblock it now. */
++			if( eOriginalNotifyState == eWaitingNotification )
++			{
++				/* The task should not have been on an event list. */
++				configASSERT( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL );
++
++				if( uxSchedulerSuspended == ( UBaseType_t ) pdFALSE )
++				{
++					( void ) uxListRemove( &( pxTCB->xGenericListItem ) );
++					prvAddTaskToReadyList( pxTCB );
++				}
++				else
++				{
++					/* The delayed and ready lists cannot be accessed, so hold
++					this task pending until the scheduler is resumed. */
++					vListInsertEnd( &( xPendingReadyList ), &( pxTCB->xEventListItem ) );
++				}
++
++				if( pxTCB->uxPriority > pxCurrentTCB->uxPriority )
++				{
++					/* The notified task has a priority above the currently
++					executing task so a yield is required. */
++					if( pxHigherPriorityTaskWoken != NULL )
++					{
++						*pxHigherPriorityTaskWoken = pdTRUE;
++					}
++				}
++				else
++				{
++					mtCOVERAGE_TEST_MARKER();
++				}
++			}
++		}
++		portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
++
++		return xReturn;
++	}
++
++#endif /* configUSE_TASK_NOTIFICATIONS */
++/*-----------------------------------------------------------*/
++
++#if( configUSE_TASK_NOTIFICATIONS == 1 )
++
++	void vTaskNotifyGiveFromISR( TaskHandle_t xTaskToNotify, BaseType_t *pxHigherPriorityTaskWoken )
++	{
++	TCB_t * pxTCB;
++	eNotifyValue eOriginalNotifyState;
++	UBaseType_t uxSavedInterruptStatus;
++
++		configASSERT( xTaskToNotify );
++
++		/* RTOS ports that support interrupt nesting have the concept of a
++		maximum	system call (or maximum API call) interrupt priority.
++		Interrupts that are	above the maximum system call priority are keep
++		permanently enabled, even when the RTOS kernel is in a critical section,
++		but cannot make any calls to FreeRTOS API functions.  If configASSERT()
++		is defined in FreeRTOSConfig.h then
++		portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
++		failure if a FreeRTOS API function is called from an interrupt that has
++		been assigned a priority above the configured maximum system call
++		priority.  Only FreeRTOS functions that end in FromISR can be called
++		from interrupts	that have been assigned a priority at or (logically)
++		below the maximum system call interrupt priority.  FreeRTOS maintains a
++		separate interrupt safe API to ensure interrupt entry is as fast and as
++		simple as possible.  More information (albeit Cortex-M specific) is
++		provided on the following link:
++		http://www.freertos.org/RTOS-Cortex-M3-M4.html */
++		portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
++
++		pxTCB = ( TCB_t * ) xTaskToNotify;
++
++		uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
++		{
++			eOriginalNotifyState = pxTCB->eNotifyState;
++			pxTCB->eNotifyState = eNotified;
++
++			/* 'Giving' is equivalent to incrementing a count in a counting
++			semaphore. */
++			( pxTCB->ulNotifiedValue )++;
++
++			/* If the task is in the blocked state specifically to wait for a
++			notification then unblock it now. */
++			if( eOriginalNotifyState == eWaitingNotification )
++			{
++				/* The task should not have been on an event list. */
++				configASSERT( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL );
++
++				if( uxSchedulerSuspended == ( UBaseType_t ) pdFALSE )
++				{
++					( void ) uxListRemove( &( pxTCB->xGenericListItem ) );
++					prvAddTaskToReadyList( pxTCB );
++				}
++				else
++				{
++					/* The delayed and ready lists cannot be accessed, so hold
++					this task pending until the scheduler is resumed. */
++					vListInsertEnd( &( xPendingReadyList ), &( pxTCB->xEventListItem ) );
++				}
++
++				if( pxTCB->uxPriority > pxCurrentTCB->uxPriority )
++				{
++					/* The notified task has a priority above the currently
++					executing task so a yield is required. */
++					if( pxHigherPriorityTaskWoken != NULL )
++					{
++						*pxHigherPriorityTaskWoken = pdTRUE;
++					}
++				}
++				else
++				{
++					mtCOVERAGE_TEST_MARKER();
++				}
++			}
++		}
++		portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
++	}
++
++#endif /* configUSE_TASK_NOTIFICATIONS */
++/*-----------------------------------------------------------*/
++
++#if ( configGENERATE_RUN_TIME_STATS == 1 )
++
++	void vTaskClearTaskRunTimeCounter( void )
++	{
++		TaskStatus_t *pxTaskStatusArray;
++		volatile UBaseType_t uxArraySize, x;
++		uint32_t ulTotalTime;
++		TCB_t *pxTCB;
++
++		/* Take a snapshot of the number of tasks in case it changes while this
++		function is executing. */
++		uxArraySize = uxCurrentNumberOfTasks;
++
++		/* Allocate an array index for each task. */
++		pxTaskStatusArray = pvPortMalloc( uxCurrentNumberOfTasks * sizeof( TaskStatus_t ) );
++
++		if( pxTaskStatusArray != NULL )
++		{
++			/* Generate the (binary) data. */
++			uxArraySize = uxTaskGetSystemState( pxTaskStatusArray, uxArraySize, &ulTotalTime );
++
++			for( x = 0; x < uxArraySize; x++ )
++			{
++				/* If null is passed in here then the name of the calling task is being queried. */
++				pxTCB = prvGetTCBFromHandle(pxTaskStatusArray[x].xHandle);
++				configASSERT( pxTCB );
++				pxTCB->ulRunTimeCounter = 0;
++			}
++			
++			vPortFree(pxTaskStatusArray);
++		}
++	}
++
++#endif /* configGENERATE_RUN_TIME_STATS */
++
++UBaseType_t uxTaskGetBottomOfStack(TaskHandle_t xTaskHandle)
++{
++	TCB_t *pxTCB;
++
++	pxTCB = ( xTaskHandle == NULL )? ( TCB_t * ) pxCurrentTCB : ( TCB_t * ) ( xTaskHandle );
++
++#if portSTACK_GROWTH < 0
++	return ( UBaseType_t )( pxTCB->pxStack );
++#else
++	return ( UBaseType_t )( pxTCB->pxEndOfStack );
++#endif
++}
++
+ /*-----------------------------------------------------------*/
+ 
+-#if ( configUSE_MUTEXES == 1 )
+-
+-	void *pvTaskIncrementMutexHeldCount( void )
+-	{
+-		/* If xSemaphoreCreateMutex() is called before any tasks have been created
+-		then pxCurrentTCB will be NULL. */
+-		if( pxCurrentTCB != NULL )
+-		{
+-			( pxCurrentTCB->uxMutexesHeld )++;
+-		}
+-
+-		return pxCurrentTCB;
+-	}
+-
+-#endif /* configUSE_MUTEXES */
+-/*-----------------------------------------------------------*/
+-
+-#if( configUSE_TASK_NOTIFICATIONS == 1 )
+-
+-	uint32_t ulTaskNotifyTake( BaseType_t xClearCountOnExit, TickType_t xTicksToWait )
+-	{
+-	TickType_t xTimeToWake;
+-	uint32_t ulReturn;
+-
+-		taskENTER_CRITICAL();
+-		{
+-			/* Only block if the notification count is not already non-zero. */
+-			if( pxCurrentTCB->ulNotifiedValue == 0UL )
+-			{
+-				/* Mark this task as waiting for a notification. */
+-				pxCurrentTCB->eNotifyState = eWaitingNotification;
+-
+-				if( xTicksToWait > ( TickType_t ) 0 )
+-				{
+-					/* The task is going to block.  First it must be removed
+-					from the ready list. */
+-					if( uxListRemove( &( pxCurrentTCB->xGenericListItem ) ) == ( UBaseType_t ) 0 )
+-					{
+-						/* The current task must be in a ready list, so there is
+-						no need to check, and the port reset macro can be called
+-						directly. */
+-						portRESET_READY_PRIORITY( pxCurrentTCB->uxPriority, uxTopReadyPriority );
+-					}
+-					else
+-					{
+-						mtCOVERAGE_TEST_MARKER();
+-					}
+-
+-					#if ( INCLUDE_vTaskSuspend == 1 )
+-					{
+-						if( xTicksToWait == portMAX_DELAY )
+-						{
+-							/* Add the task to the suspended task list instead
+-							of a delayed task list to ensure the task is not
+-							woken by a timing event.  It will block
+-							indefinitely. */
+-							vListInsertEnd( &xSuspendedTaskList, &( pxCurrentTCB->xGenericListItem ) );
+-						}
+-						else
+-						{
+-							/* Calculate the time at which the task should be
+-							woken if no notification events occur.  This may
+-							overflow but this doesn't matter, the scheduler will
+-							handle it. */
+-							xTimeToWake = xTickCount + xTicksToWait;
+-							prvAddCurrentTaskToDelayedList( xTimeToWake );
+-						}
+-					}
+-					#else /* INCLUDE_vTaskSuspend */
+-					{
+-							/* Calculate the time at which the task should be
+-							woken if the event does not occur.  This may
+-							overflow but this doesn't matter, the scheduler will
+-							handle it. */
+-							xTimeToWake = xTickCount + xTicksToWait;
+-							prvAddCurrentTaskToDelayedList( xTimeToWake );
+-					}
+-					#endif /* INCLUDE_vTaskSuspend */
+-
+-					/* All ports are written to allow a yield in a critical
+-					section (some will yield immediately, others wait until the
+-					critical section exits) - but it is not something that
+-					application code should ever do. */
+-					portYIELD_WITHIN_API();
+-				}
+-				else
+-				{
+-					mtCOVERAGE_TEST_MARKER();
+-				}
+-			}
+-			else
+-			{
+-				mtCOVERAGE_TEST_MARKER();
+-			}
+-		}
+-		taskEXIT_CRITICAL();
+-
+-		taskENTER_CRITICAL();
+-		{
+-			ulReturn = pxCurrentTCB->ulNotifiedValue;
+-
+-			if( ulReturn != 0UL )
+-			{
+-				if( xClearCountOnExit != pdFALSE )
+-				{
+-					pxCurrentTCB->ulNotifiedValue = 0UL;
+-				}
+-				else
+-				{
+-					( pxCurrentTCB->ulNotifiedValue )--;
+-				}
+-			}
+-			else
+-			{
+-				mtCOVERAGE_TEST_MARKER();
+-			}
+-
+-			pxCurrentTCB->eNotifyState = eNotWaitingNotification;
+-		}
+-		taskEXIT_CRITICAL();
+-
+-		return ulReturn;
+-	}
+-
+-#endif /* configUSE_TASK_NOTIFICATIONS */
+-/*-----------------------------------------------------------*/
+-
+-#if( configUSE_TASK_NOTIFICATIONS == 1 )
+-
+-	BaseType_t xTaskNotifyWait( uint32_t ulBitsToClearOnEntry, uint32_t ulBitsToClearOnExit, uint32_t *pulNotificationValue, TickType_t xTicksToWait )
+-	{
+-	TickType_t xTimeToWake;
+-	BaseType_t xReturn;
+-
+-		taskENTER_CRITICAL();
+-		{
+-			/* Only block if a notification is not already pending. */
+-			if( pxCurrentTCB->eNotifyState != eNotified )
+-			{
+-				/* Clear bits in the task's notification value as bits may get
+-				set	by the notifying task or interrupt.  This can be used to
+-				clear the value to zero. */
+-				pxCurrentTCB->ulNotifiedValue &= ~ulBitsToClearOnEntry;
+-
+-				/* Mark this task as waiting for a notification. */
+-				pxCurrentTCB->eNotifyState = eWaitingNotification;
+-
+-				if( xTicksToWait > ( TickType_t ) 0 )
+-				{
+-					/* The task is going to block.  First it must be removed
+-					from the	ready list. */
+-					if( uxListRemove( &( pxCurrentTCB->xGenericListItem ) ) == ( UBaseType_t ) 0 )
+-					{
+-						/* The current task must be in a ready list, so there is
+-						no need to check, and the port reset macro can be called
+-						directly. */
+-						portRESET_READY_PRIORITY( pxCurrentTCB->uxPriority, uxTopReadyPriority );
+-					}
+-					else
+-					{
+-						mtCOVERAGE_TEST_MARKER();
+-					}
+-
+-					#if ( INCLUDE_vTaskSuspend == 1 )
+-					{
+-						if( xTicksToWait == portMAX_DELAY )
+-						{
+-							/* Add the task to the suspended task list instead
+-							of a delayed task list to ensure the task is not
+-							woken by a timing event.  It will block
+-							indefinitely. */
+-							vListInsertEnd( &xSuspendedTaskList, &( pxCurrentTCB->xGenericListItem ) );
+-						}
+-						else
+-						{
+-							/* Calculate the time at which the task should be
+-							woken if no notification events occur.  This may
+-							overflow but this doesn't matter, the scheduler will
+-							handle it. */
+-							xTimeToWake = xTickCount + xTicksToWait;
+-							prvAddCurrentTaskToDelayedList( xTimeToWake );
+-						}
+-					}
+-					#else /* INCLUDE_vTaskSuspend */
+-					{
+-							/* Calculate the time at which the task should be
+-							woken if the event does not occur.  This may
+-							overflow but this doesn't matter, the scheduler will
+-							handle it. */
+-							xTimeToWake = xTickCount + xTicksToWait;
+-							prvAddCurrentTaskToDelayedList( xTimeToWake );
+-					}
+-					#endif /* INCLUDE_vTaskSuspend */
+-
+-					/* All ports are written to allow a yield in a critical
+-					section (some will yield immediately, others wait until the
+-					critical section exits) - but it is not something that
+-					application code should ever do. */
+-					portYIELD_WITHIN_API();
+-				}
+-				else
+-				{
+-					mtCOVERAGE_TEST_MARKER();
+-				}
+-			}
+-			else
+-			{
+-				mtCOVERAGE_TEST_MARKER();
+-			}
+-		}
+-		taskEXIT_CRITICAL();
+-
+-		taskENTER_CRITICAL();
+-		{
+-			if( pulNotificationValue != NULL )
+-			{
+-				/* Output the current notification value, which may or may not
+-				have changed. */
+-				*pulNotificationValue = pxCurrentTCB->ulNotifiedValue;
+-			}
+-
+-			/* If eNotifyValue is set then either the task never entered the
+-			blocked state (because a notification was already pending) or the
+-			task unblocked because of a notification.  Otherwise the task
+-			unblocked because of a timeout. */
+-			if( pxCurrentTCB->eNotifyState == eWaitingNotification )
+-			{
+-				/* A notification was not received. */
+-				xReturn = pdFALSE;
+-			}
+-			else
+-			{
+-				/* A notification was already pending or a notification was
+-				received while the task was waiting. */
+-				pxCurrentTCB->ulNotifiedValue &= ~ulBitsToClearOnExit;
+-				xReturn = pdTRUE;
+-			}
+-
+-			pxCurrentTCB->eNotifyState = eNotWaitingNotification;
+-		}
+-		taskEXIT_CRITICAL();
+-
+-		return xReturn;
+-	}
+-
+-#endif /* configUSE_TASK_NOTIFICATIONS */
+-/*-----------------------------------------------------------*/
+-
+-#if( configUSE_TASK_NOTIFICATIONS == 1 )
+-
+-	BaseType_t xTaskNotify( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction )
+-	{
+-	TCB_t * pxTCB;
+-	eNotifyValue eOriginalNotifyState;
+-	BaseType_t xReturn = pdPASS;
+-
+-		configASSERT( xTaskToNotify );
+-		pxTCB = ( TCB_t * ) xTaskToNotify;
+-
+-		taskENTER_CRITICAL();
+-		{
+-			eOriginalNotifyState = pxTCB->eNotifyState;
+-
+-			pxTCB->eNotifyState = eNotified;
+-
+-			switch( eAction )
+-			{
+-				case eSetBits	:
+-					pxTCB->ulNotifiedValue |= ulValue;
+-					break;
+-
+-				case eIncrement	:
+-					( pxTCB->ulNotifiedValue )++;
+-					break;
+-
+-				case eSetValueWithOverwrite	:
+-					pxTCB->ulNotifiedValue = ulValue;
+-					break;
+-
+-				case eSetValueWithoutOverwrite :
+-					if( eOriginalNotifyState != eNotified )
+-					{
+-						pxTCB->ulNotifiedValue = ulValue;
+-					}
+-					else
+-					{
+-						/* The value could not be written to the task. */
+-						xReturn = pdFAIL;
+-					}
+-					break;
+-
+-				case eNoAction:
+-					/* The task is being notified without its notify value being
+-					updated. */
+-					break;
+-			}
+-
+-
+-			/* If the task is in the blocked state specifically to wait for a
+-			notification then unblock it now. */
+-			if( eOriginalNotifyState == eWaitingNotification )
+-			{
+-				( void ) uxListRemove( &( pxTCB->xGenericListItem ) );
+-				prvAddTaskToReadyList( pxTCB );
+-
+-				/* The task should not have been on an event list. */
+-				configASSERT( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL );
+-
+-				if( pxTCB->uxPriority > pxCurrentTCB->uxPriority )
+-				{
+-					/* The notified task has a priority above the currently
+-					executing task so a yield is required. */
+-					portYIELD_WITHIN_API();
+-				}
+-				else
+-				{
+-					mtCOVERAGE_TEST_MARKER();
+-				}
+-			}
+-			else
+-			{
+-				mtCOVERAGE_TEST_MARKER();
+-			}
+-		}
+-		taskEXIT_CRITICAL();
+-
+-		return xReturn;
+-	}
+-
+-#endif /* configUSE_TASK_NOTIFICATIONS */
+-/*-----------------------------------------------------------*/
+-
+-#if( configUSE_TASK_NOTIFICATIONS == 1 )
+-
+-	BaseType_t xTaskNotifyFromISR( TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction, BaseType_t *pxHigherPriorityTaskWoken )
+-	{
+-	TCB_t * pxTCB;
+-	eNotifyValue eOriginalNotifyState;
+-	BaseType_t xReturn = pdPASS;
+-	UBaseType_t uxSavedInterruptStatus;
+-
+-		configASSERT( xTaskToNotify );
+-
+-		/* RTOS ports that support interrupt nesting have the concept of a
+-		maximum	system call (or maximum API call) interrupt priority.
+-		Interrupts that are	above the maximum system call priority are keep
+-		permanently enabled, even when the RTOS kernel is in a critical section,
+-		but cannot make any calls to FreeRTOS API functions.  If configASSERT()
+-		is defined in FreeRTOSConfig.h then
+-		portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+-		failure if a FreeRTOS API function is called from an interrupt that has
+-		been assigned a priority above the configured maximum system call
+-		priority.  Only FreeRTOS functions that end in FromISR can be called
+-		from interrupts	that have been assigned a priority at or (logically)
+-		below the maximum system call interrupt priority.  FreeRTOS maintains a
+-		separate interrupt safe API to ensure interrupt entry is as fast and as
+-		simple as possible.  More information (albeit Cortex-M specific) is
+-		provided on the following link:
+-		http://www.freertos.org/RTOS-Cortex-M3-M4.html */
+-		portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+-
+-		pxTCB = ( TCB_t * ) xTaskToNotify;
+-
+-		uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+-		{
+-			eOriginalNotifyState = pxTCB->eNotifyState;
+-
+-			pxTCB->eNotifyState = eNotified;
+-
+-			switch( eAction )
+-			{
+-				case eSetBits	:
+-					pxTCB->ulNotifiedValue |= ulValue;
+-					break;
+-
+-				case eIncrement	:
+-					( pxTCB->ulNotifiedValue )++;
+-					break;
+-
+-				case eSetValueWithOverwrite	:
+-					pxTCB->ulNotifiedValue = ulValue;
+-					break;
+-
+-				case eSetValueWithoutOverwrite :
+-					if( eOriginalNotifyState != eNotified )
+-					{
+-						pxTCB->ulNotifiedValue = ulValue;
+-					}
+-					else
+-					{
+-						/* The value could not be written to the task. */
+-						xReturn = pdFAIL;
+-					}
+-					break;
+-
+-				case eNoAction :
+-					/* The task is being notified without its notify value being
+-					updated. */
+-					break;
+-			}
+-
+-
+-			/* If the task is in the blocked state specifically to wait for a
+-			notification then unblock it now. */
+-			if( eOriginalNotifyState == eWaitingNotification )
+-			{
+-				/* The task should not have been on an event list. */
+-				configASSERT( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL );
+-
+-				if( uxSchedulerSuspended == ( UBaseType_t ) pdFALSE )
+-				{
+-					( void ) uxListRemove( &( pxTCB->xGenericListItem ) );
+-					prvAddTaskToReadyList( pxTCB );
+-				}
+-				else
+-				{
+-					/* The delayed and ready lists cannot be accessed, so hold
+-					this task pending until the scheduler is resumed. */
+-					vListInsertEnd( &( xPendingReadyList ), &( pxTCB->xEventListItem ) );
+-				}
+-
+-				if( pxTCB->uxPriority > pxCurrentTCB->uxPriority )
+-				{
+-					/* The notified task has a priority above the currently
+-					executing task so a yield is required. */
+-					if( pxHigherPriorityTaskWoken != NULL )
+-					{
+-						*pxHigherPriorityTaskWoken = pdTRUE;
+-					}
+-				}
+-				else
+-				{
+-					mtCOVERAGE_TEST_MARKER();
+-				}
+-			}
+-		}
+-		portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+-
+-		return xReturn;
+-	}
+-
+-#endif /* configUSE_TASK_NOTIFICATIONS */
+-/*-----------------------------------------------------------*/
+-
+-#if( configUSE_TASK_NOTIFICATIONS == 1 )
+-
+-	void vTaskNotifyGiveFromISR( TaskHandle_t xTaskToNotify, BaseType_t *pxHigherPriorityTaskWoken )
+-	{
+-	TCB_t * pxTCB;
+-	eNotifyValue eOriginalNotifyState;
+-	UBaseType_t uxSavedInterruptStatus;
+-
+-		configASSERT( xTaskToNotify );
+-
+-		/* RTOS ports that support interrupt nesting have the concept of a
+-		maximum	system call (or maximum API call) interrupt priority.
+-		Interrupts that are	above the maximum system call priority are keep
+-		permanently enabled, even when the RTOS kernel is in a critical section,
+-		but cannot make any calls to FreeRTOS API functions.  If configASSERT()
+-		is defined in FreeRTOSConfig.h then
+-		portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+-		failure if a FreeRTOS API function is called from an interrupt that has
+-		been assigned a priority above the configured maximum system call
+-		priority.  Only FreeRTOS functions that end in FromISR can be called
+-		from interrupts	that have been assigned a priority at or (logically)
+-		below the maximum system call interrupt priority.  FreeRTOS maintains a
+-		separate interrupt safe API to ensure interrupt entry is as fast and as
+-		simple as possible.  More information (albeit Cortex-M specific) is
+-		provided on the following link:
+-		http://www.freertos.org/RTOS-Cortex-M3-M4.html */
+-		portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+-
+-		pxTCB = ( TCB_t * ) xTaskToNotify;
+-
+-		uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+-		{
+-			eOriginalNotifyState = pxTCB->eNotifyState;
+-			pxTCB->eNotifyState = eNotified;
+-
+-			/* 'Giving' is equivalent to incrementing a count in a counting
+-			semaphore. */
+-			( pxTCB->ulNotifiedValue )++;
+-
+-			/* If the task is in the blocked state specifically to wait for a
+-			notification then unblock it now. */
+-			if( eOriginalNotifyState == eWaitingNotification )
+-			{
+-				/* The task should not have been on an event list. */
+-				configASSERT( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL );
+-
+-				if( uxSchedulerSuspended == ( UBaseType_t ) pdFALSE )
+-				{
+-					( void ) uxListRemove( &( pxTCB->xGenericListItem ) );
+-					prvAddTaskToReadyList( pxTCB );
+-				}
+-				else
+-				{
+-					/* The delayed and ready lists cannot be accessed, so hold
+-					this task pending until the scheduler is resumed. */
+-					vListInsertEnd( &( xPendingReadyList ), &( pxTCB->xEventListItem ) );
+-				}
+-
+-				if( pxTCB->uxPriority > pxCurrentTCB->uxPriority )
+-				{
+-					/* The notified task has a priority above the currently
+-					executing task so a yield is required. */
+-					if( pxHigherPriorityTaskWoken != NULL )
+-					{
+-						*pxHigherPriorityTaskWoken = pdTRUE;
+-					}
+-				}
+-				else
+-				{
+-					mtCOVERAGE_TEST_MARKER();
+-				}
+-			}
+-		}
+-		portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+-	}
+-
+-#endif /* configUSE_TASK_NOTIFICATIONS */
+-
+-/*-----------------------------------------------------------*/
+-
+-
+ #ifdef FREERTOS_MODULE_TEST
+ 	#include "tasks_test_access_functions.h"
+ #endif
+diff -u Source/timers.c O-Source/timers.c
+--- Source/timers.c	2015-01-16 12:44:04.000000000 -0800
++++ O-Source/timers.c	2018-05-10 09:48:16.000000000 -0700
+@@ -1,5 +1,5 @@
+ /*
+-    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
++    FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
+     All rights reserved
+ 
+     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+@@ -10,55 +10,55 @@
+     the terms of the GNU General Public License (version 2) as published by the
+     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+ 
+-	***************************************************************************
+-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
+-    >>!   obliged to provide the source code for proprietary components     !<<
+-    >>!   outside of the FreeRTOS kernel.                                   !<<
+-	***************************************************************************
++	***************************************************************************
++    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
++    >>!   distribute a combined work that includes FreeRTOS without being   !<<
++    >>!   obliged to provide the source code for proprietary components     !<<
++    >>!   outside of the FreeRTOS kernel.                                   !<<
++	***************************************************************************
+ 
+     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
++    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+     link: http://www.freertos.org/a00114.html
+ 
+     ***************************************************************************
+      *                                                                       *
+-     *    FreeRTOS provides completely free yet professionally developed,    *
+-     *    robust, strictly quality controlled, supported, and cross          *
+-     *    platform software that is more than just the market leader, it     *
+-     *    is the industry's de facto standard.                               *
++     *    FreeRTOS provides completely free yet professionally developed,    *
++     *    robust, strictly quality controlled, supported, and cross          *
++     *    platform software that is more than just the market leader, it     *
++     *    is the industry's de facto standard.                               *
+      *                                                                       *
+-     *    Help yourself get started quickly while simultaneously helping     *
+-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+-     *    tutorial book, reference manual, or both:                          *
+-     *    http://www.FreeRTOS.org/Documentation                              *
++     *    Help yourself get started quickly while simultaneously helping     *
++     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
++     *    tutorial book, reference manual, or both:                          *
++     *    http://www.FreeRTOS.org/Documentation                              *
+      *                                                                       *
+     ***************************************************************************
+ 
+-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+-	the FAQ page "My application does not run, what could be wrong?".  Have you
+-	defined configASSERT()?
+-
+-	http://www.FreeRTOS.org/support - In return for receiving this top quality
+-	embedded software for free we request you assist our global community by
+-	participating in the support forum.
+-
+-	http://www.FreeRTOS.org/training - Investing in training allows your team to
+-	be as productive as possible as early as possible.  Now you can receive
+-	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+-	Ltd, and the world's leading authority on the world's leading RTOS.
++    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
++	the FAQ page "My application does not run, what could be wrong?".  Have you
++	defined configASSERT()?
++
++	http://www.FreeRTOS.org/support - In return for receiving this top quality
++	embedded software for free we request you assist our global community by
++	participating in the support forum.
++
++	http://www.FreeRTOS.org/training - Investing in training allows your team to
++	be as productive as possible as early as possible.  Now you can receive
++	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
++	Ltd, and the world's leading authority on the world's leading RTOS.
+ 
+     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+ 
+-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+-
+-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+-    licenses offer ticketed support, indemnification and commercial middleware.
++    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
++    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
++
++    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
++    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
++    licenses offer ticketed support, indemnification and commercial middleware.
+ 
+     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+     engineered and independently SIL3 certified version for use in safety and
+@@ -365,14 +365,14 @@
+ 	}
+ 
+ #endif
+-/*-----------------------------------------------------------*/
+-
+-const char * pcTimerGetTimerName( TimerHandle_t xTimer )
+-{
+-Timer_t *pxTimer = ( Timer_t * ) xTimer;
+-
+-	return pxTimer->pcTimerName;
+-}
++/*-----------------------------------------------------------*/
++
++const char * pcTimerGetTimerName( TimerHandle_t xTimer )
++{
++Timer_t *pxTimer = ( Timer_t * ) xTimer;
++
++	return pxTimer->pcTimerName;
++}
+ /*-----------------------------------------------------------*/
+ 
+ static void prvProcessExpiredTimer( const TickType_t xNextExpireTime, const TickType_t xTimeNow )
+@@ -472,10 +472,10 @@
+ 
+ 				if( xTaskResumeAll() == pdFALSE )
+ 				{
+-					/* Yield to wait for either a command to arrive, or the
+-					block time to expire.  If a command arrived between the
+-					critical section being exited and this yield then the yield
+-					will not cause the task to block. */
++					/* Yield to wait for either a command to arrive, or the
++					block time to expire.  If a command arrived between the
++					critical section being exited and this yield then the yield
++					will not cause the task to block. */
+ 					portYIELD_WITHIN_API();
+ 				}
+ 				else
+@@ -595,7 +595,7 @@
+ 		{
+ 			/* Negative commands are pended function calls rather than timer
+ 			commands. */
+-			if( xMessage.xMessageID < ( BaseType_t ) 0 )
++			if( xMessage.xMessageID < ( BaseType_t ) 0 )
+ 			{
+ 				const CallbackParameters_t * const pxCallback = &( xMessage.u.xCallbackParameters );
+ 
+@@ -816,7 +816,7 @@
+ 		/* Checking to see if it is in the NULL list in effect checks to see if
+ 		it is referenced from either the current or the overflow timer lists in
+ 		one go, but the logic has to be reversed, hence the '!'. */
+-		xTimerIsInActiveList = ( BaseType_t ) !( listIS_CONTAINED_WITHIN( NULL, &( pxTimer->xTimerListItem ) ) );
++		xTimerIsInActiveList = ( BaseType_t ) !( listIS_CONTAINED_WITHIN( NULL, &( pxTimer->xTimerListItem ) ) );
+ 	}
+ 	taskEXIT_CRITICAL();
+ 
+@@ -847,7 +847,7 @@
+ 		xMessage.u.xCallbackParameters.ulParameter2 = ulParameter2;
+ 
+ 		xReturn = xQueueSendFromISR( xTimerQueue, &xMessage, pxHigherPriorityTaskWoken );
+-
++
+ 		tracePEND_FUNC_CALL_FROM_ISR( xFunctionToPend, pvParameter1, ulParameter2, xReturn );
+ 
+ 		return xReturn;
+@@ -862,11 +862,11 @@
+ 	{
+ 	DaemonTaskMessage_t xMessage;
+ 	BaseType_t xReturn;
+-
+-		/* This function can only be called after a timer has been created or
+-		after the scheduler has been started because, until then, the timer
+-		queue does not exist. */
+-		configASSERT( xTimerQueue );
++
++		/* This function can only be called after a timer has been created or
++		after the scheduler has been started because, until then, the timer
++		queue does not exist. */
++		configASSERT( xTimerQueue );
+ 
+ 		/* Complete the message with the function parameters and post it to the
+ 		daemon task. */
+@@ -878,7 +878,7 @@
+ 		xReturn = xQueueSendToBack( xTimerQueue, &xMessage, xTicksToWait );
+ 
+ 		tracePEND_FUNC_CALL( xFunctionToPend, pvParameter1, ulParameter2, xReturn );
+-
++
+ 		return xReturn;
+ 	}
+ 

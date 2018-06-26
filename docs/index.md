@@ -28,8 +28,6 @@ Then run the following to add the executables to your $PATH:
 
 0.1 Stack structure
 
-	├───alexa
-	│   └───include
 	├───arch
 	├───asio
 	│   └───include
@@ -102,15 +100,19 @@ Then run the following to add the executables to your $PATH:
 	│   └───include
 	├───sntp
 	│   └───inc
-	├───Source
+	├───Source  
 	│   ├───include
 	│   └───portable
 	└───url_parser
 	    └───include
  
 
-1. RTOS: FreeRTOS
+1. RTOS: FreeRTOS 
 -------------------------
+	├───Source  
+	│   ├───include
+	│   └───portable
+
 >FreeRTOS is a real-time OS that manages a multitasking and multiprocessing 
 system environment. It has a scheduler to manage user created tasks.
 FreeRTOS provides APIs for users to control, 
@@ -137,7 +139,29 @@ heap_4.c is used as the heap service on the SDK. More details can be found in th
 
 2. TCP/IP: lwIP
 -------------------------------------
-TCP/IP (Transmission Control Protocol/Internet Protocol) is a communication internet protocol 
+    ├───lwip
+	│   ├───contrib
+	│   │   └───port
+	│   │       └───FreeRTOS
+	│   │           └───OpenRISC
+	│   │               └───arch
+	│   ├───doc
+	│   └───src
+	│       ├───api
+	│       ├───core
+	│       │   ├───ipv4
+	│       │   ├───ipv6
+	│       │   └───snmp
+	│       ├───include
+	│       │   ├───ipv4
+	│       │   │   └───lwip
+	│       │   ├───ipv6
+	│       │   │   └───lwip
+	│       │   ├───lwip
+	│       │   └───netif
+	│       └───netif
+	│           └───ppp
+>TCP/IP (Transmission Control Protocol/Internet Protocol) is a communication internet protocol 
 and can also be used in a private network, either an intranet or an extranet. It provides 
 specifications on how data should be packetized, addressed, transmitted, routed and received at the destination. The current IoT standard is moving towards IP communication and transporting data over various physical layers such as Wi-Fi, IEEE 802.15.4 and Bluetooth.
 
@@ -183,8 +207,8 @@ MEMP_NUM_NETDB|4
 MEMP_NUM_PBUF|8
 PBUF_POOL_SIZE|8
 
-The required code size of lwIP is listed in Table 5. This information is gathered 
-from an ARM Cortex M4 targeted configuration using the gcc -Os optimization.
+The required code size of lwIP is listed in Table. This information is gathered 
+from an *OpenRISC orpsocv2* targeted configuration using the gcc -O2 optimization.
  The feature set is IPv4, TCP, UDP, DHCP client, ICMP, RAW, NETCONN and Sockets 
  and DNS client. The footprint is shown below.
 
@@ -196,7 +220,12 @@ from an ARM Cortex M4 targeted configuration using the gcc -Os optimization.
 
 3. SSL/TLS: mbed TLS
 -----------------------------------
-Transport Layer Security (TLS) and its predecessor, Secure Sockets Layer (SSL) are cryptographic protocols designed to provide secure communication over the computer network. TLS and SSL use X.509 certificates and asymmetric cryptography to authenticate secure data communication and to negotiate the process with a symmetric session key that ensure message confidentiality.
+	├───mbedtls
+	│   ├───include
+	│   │   └───mbedtls
+	│   ├───library
+	│   └───port
+>Transport Layer Security (TLS) and its predecessor, Secure Sockets Layer (SSL) are cryptographic protocols designed to provide secure communication over the computer network. TLS and SSL use X.509 certificates and asymmetric cryptography to authenticate secure data communication and to negotiate the process with a symmetric session key that ensure message confidentiality.
 
 [mbed TLS](https://tls.mbed.org) offers libraries including SSL/TLS cryptographic communication capabilities for (embedded) devices and applications that provide end-to-end communication protection to the upper layer application protocols such as web browsing, email, instant messaging and voice-over-IP (VoIP).
 
@@ -225,6 +254,9 @@ HEAP | 26
 
 4. HTTP (1.1) client: mbed HTTP Client
 ----------------------------------------------
+	├───httpclient
+	│   ├───inc
+	│   └───src
 The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed, collaborative, hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web.
 
 Hypertext is a structured text that uses logical links (hyperlinks) between nodes containing text. HTTP is the protocol to exchange or transfer hypertext.
@@ -247,6 +279,12 @@ The static footprint statistics for HTTP client are shown in Table, please note 
 
 5. HTTP/2 client: nghttp2
 -------------------------------------------
+	├───nghttp2
+	│   ├───lib
+	│   │   └───includes
+	│   │       └───nghttp2
+	│   └───port
+	│       └───include
 HTTP/2 is an alternative to HTTP1.1. HTTP methods, status codes and semantics are the same and it should be possible to use the same APIs as HTTP/1.x (possibly with some small additions) to represent the protocol.
 
 The focus of the protocol is on performance; specifically, end-user perceived latency, network and server resource usage. One major goal is to allow the use of a single connection from browsers to a website.
