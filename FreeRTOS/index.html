@@ -93,6 +93,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#1freertos-porting-on-openrisc">1.FreeRTOS porting on OpenRISC</a></li>
+        <li class="main "><a href="#2lwip-sys_arch-port-on-openrisc">/*2.LWIP sys_arch port on OpenRISC</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -105,12 +106,12 @@ cd FreeRTOS8.2.0/FreeRTOS/Demo/Source
 patch -p0 &lt; openrisc.patch
 cd Source
 </code></pre>
-<p>//2.LWIP sys_arch port on OpenRISC
-//-----------------------------------
-//<a href="https://github.com/jhpark555/newdocu/blob/master/docs/Files/lwip-sys.patch">LWIP OpenRISC.patch</a>
-// patch against LWIP V1.4.1 ports directory</p>
-<p>//    copy sys_arch.c in lwip/ports into 
-//    lwip/contrib/port/FreeRTOS/OpenRISC in OpenRISC folder.</p></div>
+<h2 id="2lwip-sys_arch-port-on-openrisc">/*2.LWIP sys_arch port on OpenRISC</h2>
+<p><a href="https://github.com/jhpark555/newdocu/blob/master/docs/Files/lwip-sys.patch">LWIP OpenRISC.patch</a>
+ patch against LWIP V1.4.1 ports directory</p>
+<pre><code>copy sys_arch.c in lwip/ports into 
+lwip/contrib/port/FreeRTOS/OpenRISC in OpenRISC folder.*/
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
