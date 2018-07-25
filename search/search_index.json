@@ -142,43 +142,13 @@
         },
         {
             "location": "/FreeRTOS/",
-            "text": "1.FreeRTOS porting on OpenRISC\n\n\nFreeRTOS_OpenRISC.patch\n\n patch against FreeRTOS V8.2.0 source directory\n\n\nunzip FreeRTOSV8.2.0.zip\ncd FreeRTOS8.2.0/FreeRTOS/Demo/Source\npatch -p0 < openrisc.patch\ncd Source\n\n\n\n2.LWIP sys_arch port on OpenRISC\n\n\n-----------------------------------\n\n\nLWIP OpenRISC.patch\n\n\npatch against LWIP V1.4.1 ports directory\n\n\ncopy sys_arch.c in lwip/ports into\n\n\nlwip/contrib/port/FreeRTOS/OpenRISC in OpenRISC folder.",
+            "text": "1.FreeRTOS porting on OpenRISC\n\n\nFreeRTOS_OpenRISC.patch\n\n patch against FreeRTOS V8.2.0 source directory\n\n\nunzip FreeRTOSV8.2.0.zip\ncd FreeRTOS8.2.0/FreeRTOS/Demo/Source\npatch -p0 < openrisc.patch\ncd Source\n\n\n\n//2.LWIP sys_arch port on OpenRISC\n//-----------------------------------\n//\nLWIP OpenRISC.patch\n\n// patch against LWIP V1.4.1 ports directory\n\n\n//    copy sys_arch.c in lwip/ports into \n//    lwip/contrib/port/FreeRTOS/OpenRISC in OpenRISC folder.",
             "title": "Porting"
         },
         {
             "location": "/FreeRTOS/#1freertos-porting-on-openrisc",
-            "text": "FreeRTOS_OpenRISC.patch \n patch against FreeRTOS V8.2.0 source directory  unzip FreeRTOSV8.2.0.zip\ncd FreeRTOS8.2.0/FreeRTOS/Demo/Source\npatch -p0 < openrisc.patch\ncd Source",
+            "text": "FreeRTOS_OpenRISC.patch \n patch against FreeRTOS V8.2.0 source directory  unzip FreeRTOSV8.2.0.zip\ncd FreeRTOS8.2.0/FreeRTOS/Demo/Source\npatch -p0 < openrisc.patch\ncd Source  //2.LWIP sys_arch port on OpenRISC\n//-----------------------------------\n// LWIP OpenRISC.patch \n// patch against LWIP V1.4.1 ports directory  //    copy sys_arch.c in lwip/ports into \n//    lwip/contrib/port/FreeRTOS/OpenRISC in OpenRISC folder.",
             "title": "1.FreeRTOS porting on OpenRISC"
-        },
-        {
-            "location": "/FreeRTOS/#2lwip-sys_arch-port-on-openrisc",
-            "text": "",
-            "title": "2.LWIP sys_arch port on OpenRISC"
-        },
-        {
-            "location": "/FreeRTOS/#-",
-            "text": "",
-            "title": "-----------------------------------"
-        },
-        {
-            "location": "/FreeRTOS/#lwip-openriscpatch",
-            "text": "",
-            "title": "LWIP OpenRISC.patch"
-        },
-        {
-            "location": "/FreeRTOS/#patch-against-lwip-v141-ports-directory",
-            "text": "",
-            "title": "patch against LWIP V1.4.1 ports directory"
-        },
-        {
-            "location": "/FreeRTOS/#copy-sys_archc-in-lwipports-into",
-            "text": "",
-            "title": "copy sys_arch.c in lwip/ports into"
-        },
-        {
-            "location": "/FreeRTOS/#lwipcontribportfreertosopenrisc-in-openrisc-folder",
-            "text": "",
-            "title": "lwip/contrib/port/FreeRTOS/OpenRISC in OpenRISC folder."
         }
     ]
 }
